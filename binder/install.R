@@ -1,1 +1,6 @@
 install.packages("data.table")
+install.packages("drc")
+install.packages("kableExtra")
+install.packages("ggplot2")
+install.packages("scales")
+install.packages("ggthemes")
