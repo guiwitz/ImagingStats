@@ -1,0 +1,5 @@
+# Book settings
+title: Imaging statistics
+#logo: 'logo.png'
+execute:
+  execute_notebooks: "off"
