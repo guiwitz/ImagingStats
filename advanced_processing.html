@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced processing &#8212; Imaging statistics</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="R Notebook for Imaging Stats MIC Course" href="R_analysis.html" />
+    <link rel="prev" title="Image processing routine for quantitative analysis" href="image_processing.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Imaging statistics</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Readme.html">
+   Imaging statistics
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebook_basics.html">
+   Notebook basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="image_processing.html">
+   Image processing routine for quantitative analysis
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Advanced processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="R_analysis.html">
+   R Notebook for Imaging Stats MIC Course
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/advanced_processing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/advanced_processing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-learning-made-easy-example-with-cellpose">
+   Deep Learning made easy: example with cellpose
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-cellpose">
+     Installing cellpose
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-gpu">
+     Checking GPU
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-and-use-a-model">
+     Load and use a model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-external-software">
+   Using external software
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installation">
+     Installation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-ilastik">
+     Running ilastik
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="advanced-processing">
+<h1>Advanced processing<a class="headerlink" href="#advanced-processing" title="Permalink to this headline">¶</a></h1>
+<p>In the previous notebook, we have seen a very simple analysis pipeline. The great advantage of using Python is however that you get access to cutting edge method relatively easily. As you can also run regular commands from the notebook, you can also mix different softwares directly in your pipeline.</p>
+<p>We illustrate these two points here with Cellpose, a generalistic deep learning based cell segmentation approach and Ilasitk, the popular software for ML based segmentation.</p>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<p>First we re-load our dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://data.broadinstitute.org/bbbc/BBBC013/BBBC013_v1_images_bmp.zip&#39;</span>
+    <span class="n">myfile</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp&#39;</span><span class="p">)</span>
+<span class="n">file_list2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;Channel2*.BMP&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="deep-learning-made-easy-example-with-cellpose">
+<h2>Deep Learning made easy: example with cellpose<a class="headerlink" href="#deep-learning-made-easy-example-with-cellpose" title="Permalink to this headline">¶</a></h2>
+<p>Cellpose is a deep learning algorithm that has been trained on a massive trove of data to identify nuclei and cells. The variety in the training set makes it extremely versatile so that retrainig is not necessary in most standard cases.</p>
+<div class="section" id="installing-cellpose">
+<h3>Installing cellpose<a class="headerlink" href="#installing-cellpose" title="Permalink to this headline">¶</a></h3>
+<p>Unlike Numpy, scikit-image etc. cellpose is not available by default on Colab, so you have to install it via pip:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">bash</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">cellpose</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">guiwitz</span><span class="o">/</span><span class="n">microfilm</span><span class="o">.</span><span class="n">git</span><span class="nd">@master</span><span class="c1">#egg=microfilm</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">imagecodecs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: cellpose in /usr/local/lib/python3.7/dist-packages (0.6.1)
+Requirement already satisfied: tifffile in /usr/local/lib/python3.7/dist-packages (from cellpose) (2021.4.8)
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from cellpose) (1.19.5)
+Requirement already satisfied: opencv-python-headless in /usr/local/lib/python3.7/dist-packages (from cellpose) (4.5.1.48)
+Requirement already satisfied: torch&gt;=1.6 in /usr/local/lib/python3.7/dist-packages (from cellpose) (1.8.1+cu101)
+Requirement already satisfied: natsort in /usr/local/lib/python3.7/dist-packages (from cellpose) (5.5.0)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.7/dist-packages (from cellpose) (4.41.1)
+Requirement already satisfied: numba in /usr/local/lib/python3.7/dist-packages (from cellpose) (0.51.2)
+Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from cellpose) (1.4.1)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from torch&gt;=1.6-&gt;cellpose) (3.7.4.3)
+Requirement already satisfied: llvmlite&lt;0.35,&gt;=0.34.0.dev0 in /usr/local/lib/python3.7/dist-packages (from numba-&gt;cellpose) (0.34.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from numba-&gt;cellpose) (54.2.0)
+Collecting microfilm
+  Cloning https://github.com/guiwitz/microfilm.git (to revision master) to /tmp/pip-install-jxz0mzdt/microfilm
+  Installing build dependencies: started
+  Installing build dependencies: finished with status &#39;done&#39;
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status &#39;done&#39;
+    Preparing wheel metadata: started
+    Preparing wheel metadata: finished with status &#39;done&#39;
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from microfilm) (3.2.2)
+Requirement already satisfied: h5py in /usr/local/lib/python3.7/dist-packages (from microfilm) (2.10.0)
+Collecting aicsimageio
+  Downloading https://files.pythonhosted.org/packages/d2/83/539227400db61fd6ebecbb5305dcde24783f9422e50962e8a202eebea056/aicsimageio-3.3.4-py2.py3-none-any.whl (60kB)
+Requirement already satisfied: tifffile in /usr/local/lib/python3.7/dist-packages (from microfilm) (2021.4.8)
+Requirement already satisfied: scikit-image in /usr/local/lib/python3.7/dist-packages (from microfilm) (0.16.2)
+Collecting nd2reader@ git+https://github.com/guiwitz/nd2reader.git@master#egg=nd2reader
+  Cloning https://github.com/guiwitz/nd2reader.git (to revision master) to /tmp/pip-install-jxz0mzdt/nd2reader
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from microfilm) (1.19.5)
+Requirement already satisfied: natsort in /usr/local/lib/python3.7/dist-packages (from microfilm) (5.5.0)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;microfilm) (0.10.0)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;microfilm) (2.8.1)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;microfilm) (1.3.1)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;microfilm) (2.4.7)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from h5py-&gt;microfilm) (1.15.0)
+Collecting lxml&gt;=4.4.2
+  Downloading https://files.pythonhosted.org/packages/cf/4d/6537313bf58fe22b508f08cf3eb86b29b6f9edf68e00454224539421073b/lxml-4.6.3-cp37-cp37m-manylinux1_x86_64.whl (5.5MB)
+Requirement already satisfied: toolz&gt;=0.10.0 in /usr/local/lib/python3.7/dist-packages (from aicsimageio-&gt;microfilm) (0.11.1)
+Requirement already satisfied: imageio&gt;=2.3.0 in /usr/local/lib/python3.7/dist-packages (from aicsimageio-&gt;microfilm) (2.4.1)
+Collecting aicspylibczi&lt;3.0,&gt;=2.7.5
+  Downloading https://files.pythonhosted.org/packages/06/aa/2e238f68434731561c1b84701e885c537e237dccf13f51818659704b8c93/aicspylibczi-2.8.0-cp37-cp37m-manylinux2010_x86_64.whl (621kB)
+Collecting imagecodecs&gt;=2020.5.30
+  Downloading https://files.pythonhosted.org/packages/d3/b7/b376a1e8d3c7f7f83012e722a9c11606137540248f89766bb28a8dc879d4/imagecodecs-2021.3.31-cp37-cp37m-manylinux2014_x86_64.whl (24.7MB)
+Collecting distributed&gt;=2.9.3
+  Downloading https://files.pythonhosted.org/packages/0c/b0/3454dc44239c526f9c9e4cf04f62823776b71f927db74302986d56e7a9a1/distributed-2021.4.0-py3-none-any.whl (684kB)
+Collecting readlif&gt;=0.2.1
+  Downloading https://files.pythonhosted.org/packages/4d/b9/1e39639a06659dadde0fff60b6b496600fbfd2b519174f0930f155bcb0b4/readlif-0.5.1-py3-none-any.whl
+Requirement already satisfied: dask&gt;=2.9.0 in /usr/local/lib/python3.7/dist-packages (from aicsimageio-&gt;microfilm) (2.12.0)
+Requirement already satisfied: pillow&gt;=4.3.0 in /usr/local/lib/python3.7/dist-packages (from scikit-image-&gt;microfilm) (7.1.2)
+Requirement already satisfied: networkx&gt;=2.0 in /usr/local/lib/python3.7/dist-packages (from scikit-image-&gt;microfilm) (2.5.1)
+Requirement already satisfied: PyWavelets&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from scikit-image-&gt;microfilm) (1.1.1)
+Requirement already satisfied: scipy&gt;=0.19.0 in /usr/local/lib/python3.7/dist-packages (from scikit-image-&gt;microfilm) (1.4.1)
+Collecting xmltodict&gt;=0.9.2
+  Downloading https://files.pythonhosted.org/packages/28/fd/30d5c1d3ac29ce229f6bdc40bbc20b28f716e8b363140c26eff19122d8a5/xmltodict-0.12.0-py2.py3-none-any.whl
+Collecting pims&gt;=0.3.0
+  Downloading https://files.pythonhosted.org/packages/d5/47/82e0ac31e01a271e5a06362fbf03769e9081956f6772f91d98b32899d743/PIMS-0.5.tar.gz (85kB)
+Requirement already satisfied: psutil&gt;=5.0 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (5.4.8)
+Requirement already satisfied: sortedcontainers!=2.0.0,!=2.0.1 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (2.3.0)
+Requirement already satisfied: pyyaml in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (3.13)
+Requirement already satisfied: tornado&gt;=5; python_version &lt; &quot;3.8&quot; in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (5.1.1)
+Requirement already satisfied: click&gt;=6.6 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (7.1.2)
+Requirement already satisfied: zict&gt;=0.1.3 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (2.0.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (54.2.0)
+Collecting cloudpickle&gt;=1.5.0
+  Downloading https://files.pythonhosted.org/packages/e7/e3/898487e5dbeb612054cf2e0c188463acb358167fef749c53c8bb8918cea1/cloudpickle-1.6.0-py3-none-any.whl
+Requirement already satisfied: tblib&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (1.7.0)
+Requirement already satisfied: msgpack&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (1.0.2)
+Requirement already satisfied: decorator&lt;5,&gt;=4.3 in /usr/local/lib/python3.7/dist-packages (from networkx&gt;=2.0-&gt;scikit-image-&gt;microfilm) (4.4.2)
+Collecting slicerator&gt;=0.9.8
+  Downloading https://files.pythonhosted.org/packages/75/ae/fe46f5371105508a209fe6162e7e7b11db531a79d2eabcd24566b8b1f534/slicerator-1.0.0-py3-none-any.whl
+Requirement already satisfied: heapdict in /usr/local/lib/python3.7/dist-packages (from zict&gt;=0.1.3-&gt;distributed&gt;=2.9.3-&gt;aicsimageio-&gt;microfilm) (1.0.1)
+Building wheels for collected packages: microfilm
+  Building wheel for microfilm (PEP 517): started
+  Building wheel for microfilm (PEP 517): finished with status &#39;done&#39;
+  Created wheel for microfilm: filename=microfilm-0.0.2.dev11+g06a762d-cp37-none-any.whl size=9802 sha256=7d1a1a757d8deb9b46361c7a2b55cb9259cec6c18870f0267c8b4be20fd988ed
+  Stored in directory: /tmp/pip-ephem-wheel-cache-zlgct8oy/wheels/d0/c4/b6/02340665da49a886bb5a33201402799512e530c6fac55fd0fe
+Successfully built microfilm
+Building wheels for collected packages: nd2reader, pims
+  Building wheel for nd2reader (setup.py): started
+  Building wheel for nd2reader (setup.py): finished with status &#39;done&#39;
+  Created wheel for nd2reader: filename=nd2reader-3.2.3.gw-py2.py3-none-any.whl size=35972 sha256=69afb49a556d307e0fcb5cca5f859454cae19251ec17ceb0af1409d75fa5770c
+  Stored in directory: /tmp/pip-ephem-wheel-cache-zlgct8oy/wheels/da/50/c3/8a18ff8641c808ee4af091f0264d2b68e37745472308ffafb9
+  Building wheel for pims (setup.py): started
+  Building wheel for pims (setup.py): finished with status &#39;done&#39;
+  Created wheel for pims: filename=PIMS-0.5-cp37-none-any.whl size=84328 sha256=8b89c5d751663effda88fd6541043c8c1e58bbc8bb2e4e05e643b7a8353dc54e
+  Stored in directory: /root/.cache/pip/wheels/0e/0a/14/4c33a4cc1b9158e57329a38e8e3e03901ed24060eb322d5462
+Successfully built nd2reader pims
+Installing collected packages: lxml, aicspylibczi, imagecodecs, cloudpickle, distributed, readlif, aicsimageio, xmltodict, slicerator, pims, nd2reader, microfilm
+  Found existing installation: lxml 4.2.6
+    Uninstalling lxml-4.2.6:
+      Successfully uninstalled lxml-4.2.6
+  Found existing installation: cloudpickle 1.3.0
+    Uninstalling cloudpickle-1.3.0:
+      Successfully uninstalled cloudpickle-1.3.0
+  Found existing installation: distributed 1.25.3
+    Uninstalling distributed-1.25.3:
+      Successfully uninstalled distributed-1.25.3
+Successfully installed aicsimageio-3.3.4 aicspylibczi-2.8.0 cloudpickle-1.6.0 distributed-2021.4.0 imagecodecs-2021.3.31 lxml-4.6.3 microfilm-0.0.2.dev11+g06a762d nd2reader-3.2.3.gw pims-0.5 readlif-0.5.1 slicerator-1.0.0 xmltodict-0.12.0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Running command git clone -q https://github.com/guiwitz/microfilm.git /tmp/pip-install-jxz0mzdt/microfilm
+  Running command git clone -q https://github.com/guiwitz/nd2reader.git /tmp/pip-install-jxz0mzdt/nd2reader
+  Running command git submodule update --init --recursive -q
+ERROR: distributed 2021.4.0 has requirement dask&gt;=2021.03.0, but you&#39;ll have dask 2.12.0 which is incompatible.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="checking-gpu">
+<h3>Checking GPU<a class="headerlink" href="#checking-gpu" title="Permalink to this headline">¶</a></h3>
+<p>As cellpose is deep-learning based, it can exploit the powere of GPUs to run. On Colab you can choose to use a GPU by <em>changing the runtime type</em> in the Runtime menu. Check if the GPU is used:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!nvcc --version
+!nvidia-smi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2020 NVIDIA Corporation
+Built on Wed_Jul_22_19:09:09_PDT_2020
+Cuda compilation tools, release 11.0, V11.0.221
+Build cuda_11.0_bu.TC445_37.28845127_0
+Sat Apr 17 18:48:07 2021       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 460.67       Driver Version: 460.32.03    CUDA Version: 11.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla T4            Off  | 00000000:00:04.0 Off |                    0 |
+| N/A   43C    P8     9W /  70W |      0MiB / 15109MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-and-use-a-model">
+<h3>Load and use a model<a class="headerlink" href="#load-and-use-a-model" title="Permalink to this headline">¶</a></h3>
+<p>Now we can load a cellpose model and use it to segment the nuclei of our image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cellpose</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Cellpose</span><span class="p">(</span><span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;nuclei&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading: &quot;https://www.cellpose.org/models/cyto_0&quot; to /root/.cellpose/models/cyto_0
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 79.4MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cyto_1&quot; to /root/.cellpose/models/cyto_1
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 89.2MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cyto_2&quot; to /root/.cellpose/models/cyto_2
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 96.0MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cyto_3&quot; to /root/.cellpose/models/cyto_3
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 96.2MB/s]
+Downloading: &quot;https://www.cellpose.org/models/size_cyto_0.npy&quot; to /root/.cellpose/models/size_cyto_0.npy
+100%|██████████| 3.55k/3.55k [00:00&lt;00:00, 8.82MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cytotorch_0&quot; to /root/.cellpose/models/cytotorch_0
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 95.1MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cytotorch_1&quot; to /root/.cellpose/models/cytotorch_1
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 99.1MB/s]
+Downloading: &quot;https://www.cellpose.org/models/cytotorch_2&quot; to /root/.cellpose/models/cytotorch_2
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 104MB/s] 
+Downloading: &quot;https://www.cellpose.org/models/cytotorch_3&quot; to /root/.cellpose/models/cytotorch_3
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 95.6MB/s]
+Downloading: &quot;https://www.cellpose.org/models/size_cytotorch_0.npy&quot; to /root/.cellpose/models/size_cytotorch_0.npy
+100%|██████████| 5.23k/5.23k [00:00&lt;00:00, 4.36MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nuclei_0&quot; to /root/.cellpose/models/nuclei_0
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 83.8MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nuclei_1&quot; to /root/.cellpose/models/nuclei_1
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 60.0MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nuclei_2&quot; to /root/.cellpose/models/nuclei_2
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 62.6MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nuclei_3&quot; to /root/.cellpose/models/nuclei_3
+100%|██████████| 25.2M/25.2M [00:00&lt;00:00, 44.3MB/s]
+Downloading: &quot;https://www.cellpose.org/models/size_nuclei_0.npy&quot; to /root/.cellpose/models/size_nuclei_0.npy
+100%|██████████| 3.55k/3.55k [00:00&lt;00:00, 1.55MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nucleitorch_0&quot; to /root/.cellpose/models/nucleitorch_0
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 48.7MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nucleitorch_1&quot; to /root/.cellpose/models/nucleitorch_1
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 62.8MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nucleitorch_2&quot; to /root/.cellpose/models/nucleitorch_2
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 55.3MB/s]
+Downloading: &quot;https://www.cellpose.org/models/nucleitorch_3&quot; to /root/.cellpose/models/nucleitorch_3
+100%|██████████| 25.3M/25.3M [00:00&lt;00:00, 91.6MB/s]
+Downloading: &quot;https://www.cellpose.org/models/size_nucleitorch_0.npy&quot; to /root/.cellpose/models/size_nucleitorch_0.npy
+100%|██████████| 3.54k/3.54k [00:00&lt;00:00, 7.07MB/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>** TORCH CUDA version installed and working. **
+&gt;&gt;&gt;&gt; using GPU
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skimage.io</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">file_list2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">masks</span><span class="p">,</span> <span class="n">flows</span><span class="p">,</span> <span class="n">styles</span><span class="p">,</span> <span class="n">diams</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">([</span><span class="n">image</span><span class="p">],</span> <span class="n">diameter</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>processing 1 image(s)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/torch/nn/functional.py:3829: UserWarning: Default grid_sample and affine_grid behavior has changed to align_corners=False since 1.3.0. Please specify align_corners=True if the old behavior is desired. See the documentation of grid_sample for details.
+  &quot;Default grid_sample and affine_grid behavior has changed &quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time spent: running network 1.58s; flow+mask computation 1.05
+estimated masks for 1 image(s) in 2.65 sec
+&gt;&gt;&gt;&gt; TOTAL TIME 2.65 sec
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we can look at the output:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">microfilm</span> <span class="kn">import</span> <span class="n">microplot</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">microplot</span><span class="o">.</span><span class="n">random_cmap</span><span class="p">(</span><span class="mf">0.5</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/advanced_processing_15_0.png" src="_images/advanced_processing_15_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-external-software">
+<h2>Using external software<a class="headerlink" href="#using-external-software" title="Permalink to this headline">¶</a></h2>
+<p>Since we have access to the command line from the notebook, we can both install and run any software from there. Here we show how to do this with Ilastik.</p>
+<p>We trained an Ilastik pixel classifier with three images and saved the project. Now we uploaded the project to GitHub to make it available and can use it in this notebook to segment <em>new</em> images.</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>First we need to install Ilastik. We download it using <code class="docutils literal notranslate"><span class="pre">wget</span></code> and unzip it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!wget https://files.ilastik.org/ilastik-1.3.3post3-Linux.tar.bz2
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2021-04-17 19:09:20--  https://files.ilastik.org/ilastik-1.3.3post3-Linux.tar.bz2
+Resolving files.ilastik.org (files.ilastik.org)... 194.94.44.60
+Connecting to files.ilastik.org (files.ilastik.org)|194.94.44.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 370980201 (354M) [application/x-bzip2]
+Saving to: ‘ilastik-1.3.3post3-Linux.tar.bz2’
+
+ilastik-1.3.3post3- 100%[===================&gt;] 353.79M  19.3MB/s    in 24s     
+
+2021-04-17 19:09:45 (14.5 MB/s) - ‘ilastik-1.3.3post3-Linux.tar.bz2’ saved [370980201/370980201]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!tar xjf ilastik-1.3.3post3-Linux.tar.bz2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we also download the Ilastik project from GitHub:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!wget https://github.com/guiwitz/ImagingStats/raw/master/ilastik/ilastik_demo.ilp
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2021-04-17 19:13:39--  https://github.com/guiwitz/ImagingStats/raw/master/ilastik/ilastik_demo.ilp
+Resolving github.com (github.com)... 140.82.112.3
+Connecting to github.com (github.com)|140.82.112.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/guiwitz/ImagingStats/master/ilastik/ilastik_demo.ilp [following]
+--2021-04-17 19:13:39--  https://raw.githubusercontent.com/guiwitz/ImagingStats/master/ilastik/ilastik_demo.ilp
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 295260 (288K) [application/octet-stream]
+Saving to: ‘ilastik_demo.ilp’
+
+ilastik_demo.ilp    100%[===================&gt;] 288.34K  --.-KB/s    in 0.006s  
+
+2021-04-17 19:13:39 (45.2 MB/s) - ‘ilastik_demo.ilp’ saved [295260/295260]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="running-ilastik">
+<h3>Running ilastik<a class="headerlink" href="#running-ilastik" title="Permalink to this headline">¶</a></h3>
+<p>We now need to create a command that will run our analysis. For that we’ll need the location of the ilastik project, the location of the <code class="docutils literal notranslate"><span class="pre">run_ilastik.sh</span></code> script to run Ilastik and the location one or more images. Then we usse the formatting described in the ilastik documentation to create the command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">ilastik_location</span> <span class="o">=</span> <span class="s1">&#39;/content/ilastik-1.3.3post3-Linux/run_ilastik.sh&#39;</span>
+<span class="n">ilastik_project</span> <span class="o">=</span> <span class="s1">&#39;/content/ilastik_demo.ilp&#39;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;output&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+
+<span class="n">command</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> --headless --readonly --project=&quot;</span><span class="si">%s</span><span class="s1">&quot; --output_format=tif --export_source=&quot;Simple Segmentation&quot;&#39;</span>
+               <span class="s1">&#39; --output_filename_format=&quot;</span><span class="si">%s</span><span class="s1">/</span><span class="si">{nickname}</span><span class="s1">_results.tif&quot; &#39;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">ilastik_location</span><span class="p">,</span>
+        <span class="n">ilastik_project</span><span class="p">,</span>
+        <span class="n">output</span><span class="p">)</span>
+
+<span class="n">files_to_process</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">file_list2</span><span class="p">]</span>
+<span class="n">command_full</span> <span class="o">=</span> <span class="n">command</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files_to_process</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">command_full</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/content/ilastik-1.3.3post3-Linux/run_ilastik.sh --headless --readonly --project=&quot;/content/ilastik_demo.ilp&quot; --output_format=tif --export_source=&quot;Simple Segmentation&quot; --output_filename_format=&quot;output/{nickname}_results.tif&quot; BBBC013_v1_images_bmp/Channel2-25-C-01.BMP BBBC013_v1_images_bmp/Channel2-90-H-06.BMP BBBC013_v1_images_bmp/Channel2-68-F-08.BMP&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command_full</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can check the result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skimage.io</span>
+<span class="kn">import</span> <span class="nn">skimage.morphology</span>
+
+<span class="n">image_to_segment</span><span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp/Channel2-25-C-01.BMP&#39;</span><span class="p">)</span>
+<span class="n">segmented</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;/content/output/Channel2-25-C-01_results.tif&#39;</span><span class="p">,</span> <span class="n">plugin</span><span class="o">=</span><span class="s1">&#39;tifffile&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_to_segment</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">skimage</span><span class="o">.</span><span class="n">morphology</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">segmented</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">microplot</span><span class="o">.</span><span class="n">random_cmap</span><span class="p">(</span><span class="mf">0.5</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/advanced_processing_28_0.png" src="_images/advanced_processing_28_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="image_processing.html" title="previous page">Image processing routine for quantitative analysis</a>
+    <a class='right-next' id="next-link" href="R_analysis.html" title="next page">R Notebook for Imaging Stats MIC Course</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

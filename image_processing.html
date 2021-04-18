@@ -1,0 +1,1872 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image processing routine for quantitative analysis &#8212; Imaging statistics</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Advanced processing" href="advanced_processing.html" />
+    <link rel="prev" title="Notebook basics" href="notebook_basics.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Imaging statistics</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Readme.html">
+   Imaging statistics
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebook_basics.html">
+   Notebook basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Image processing routine for quantitative analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="advanced_processing.html">
+   Advanced processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="R_analysis.html">
+   R Notebook for Imaging Stats MIC Course
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/image_processing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/image_processing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-data">
+   Import data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parse-files">
+   Parse files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-processing-pipeline">
+   Image processing pipeline
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#thresholding">
+     Thresholding
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#measure-regions">
+     Measure regions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clean-up">
+     Clean-up
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#complete-pipeline">
+     Complete pipeline
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combine-with-metadata">
+   Combine with metadata
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-metadata">
+     Import metadata
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#complete-with-new-information">
+     Complete with new information
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting">
+   Plotting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#export-the-data">
+   Export the data
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="image-processing-routine-for-quantitative-analysis">
+<h1>Image processing routine for quantitative analysis<a class="headerlink" href="#image-processing-routine-for-quantitative-analysis" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we present a very simple image processing routine to illustrate all the steps required to obtain quantitative results that can then be analyzed statistically.</p>
+<p>The dataset used here comes from the <a class="reference external" href="https://bbbc.broadinstitute.org/BBBC013">Broad Bioimage Benchmark Collection</a> (under <a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a> by Ilya Ravkin) and consists in 96 images of human osteosarcoma cells, U2OS, imaged by fluorescence microscopy (IN Cell Analyzer 3000) in two channels: in one DNA was staind with DRAQ highlighting the nuclei and in the other the Forkhead protein (FKHR) was tagged by EGFP.</p>
+<p>While FKHR is mostly found in the cytoplasm, the drugs Wortmannin and LY294002 lead to its translocation to the nucleus. Different amounts of drugs were used in a 96-well plate, as shown here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://data.broadinstitute.org/bbbc/BBBC013/visual_plate_map.png&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><img src="https://data.broadinstitute.org/bbbc/BBBC013/visual_plate_map.png" width="700"/></div></div>
+</div>
+<p>The goal of this pipeline is to 1) segment the nuclei and 2) use that segmentation to measure the intra-nucleus intensity in the second channel which reflects the amount of translocated protein.</p>
+<div class="section" id="import-data">
+<h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this headline">¶</a></h2>
+<p>The first step in any analysis is to obtain the data. While you may have data on your local computer, once your work is published, you should share the them by uploading them to a data repository. In that way, anyone can re-use your data, and if your code is also available, reproduce your analysis.</p>
+<p>In that prespective, notebooks are useful in two aspects. First, since you can easily run them remotely, you can just upload them where your data “live”, avoiding data transfers. Second, as you have access to both command line tools and all the “machinery” of languages like Python you can easily import data <em>within</em> your workflow:</p>
+<p>In this case, the data are hosted on the BBBC website. We can download the zip file and unzip it directly <em>within</em> the notebook using standard packages like <code class="docutils literal notranslate"><span class="pre">requests</span></code> and <code class="docutils literal notranslate"><span class="pre">zipfile</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://data.broadinstitute.org/bbbc/BBBC013/BBBC013_v1_images_bmp.zip&#39;</span>
+    <span class="n">myfile</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="parse-files">
+<h2>Parse files<a class="headerlink" href="#parse-files" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have imported our data, we need to figure how the images are stored and how to import them. We can check the content of the folder:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;BBBC013_v1_images_bmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Channel1-62-F-02.BMP&#39;,
+ &#39;Channel2-91-H-07.BMP&#39;,
+ &#39;Channel1-25-C-01.BMP&#39;,
+ &#39;Channel1-78-G-06.BMP&#39;,
+ &#39;Channel2-42-D-06.BMP&#39;,
+ &#39;Channel2-02-A-02.BMP&#39;,
+ &#39;Channel1-70-F-10.BMP&#39;,
+ &#39;Channel1-85-H-01.BMP&#39;,
+ &#39;Channel1-87-H-03.BMP&#39;,
+ &#39;Channel1-46-D-10.BMP&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the name of each image encodes the location in the plate. To be able to “link” condition and image and to match the pairs of images for the two channels, we’ll need to do some <em>name parsing</em>. Let’s start by simply finding all images of <em>Channel1</em> and <em>Channel2</em>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_list1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;Channel1*.BMP&#39;</span><span class="p">))</span>
+<span class="n">file_list2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;Channel2*.BMP&#39;</span><span class="p">))</span>
+<span class="n">file_list1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-62-F-02.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-25-C-01.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-78-G-06.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-70-F-10.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-85-H-01.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-87-H-03.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-46-D-10.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-27-C-03.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-28-C-04.BMP&#39;),
+ PosixPath(&#39;BBBC013_v1_images_bmp/Channel1-18-B-06.BMP&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, images are not sorted very logically. We can fix this with the <code class="docutils literal notranslate"><span class="pre">natsort</span></code> package. This will ensure that we have matching pairs of images at a given location in both lists:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">natsort</span> <span class="kn">import</span> <span class="n">natsorted</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_list1</span> <span class="o">=</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">file_list1</span><span class="p">)</span>
+<span class="n">file_list2</span> <span class="o">=</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">file_list2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;file #8 in channel1: </span><span class="si">{</span><span class="n">file_list1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;file #8 in channel2: </span><span class="si">{</span><span class="n">file_list2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>file #8 in channel1: BBBC013_v1_images_bmp/Channel1-02-A-02.BMP
+file #8 in channel2: BBBC013_v1_images_bmp/Channel2-02-A-02.BMP
+</pre></div>
+</div>
+</div>
+</div>
+<p>We also now want to know to which well each image corresponds. We could try to use that first number in the file name, but we’ll show a more general solution here using a regular expression. We define here a pattern <code class="docutils literal notranslate"><span class="pre">'.*\-.*\-(.*)\-(.*)\.BMP'</span></code> that matches the file names and extracts the row and column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">position</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.*\-.*\-(.*)\-(.*)\.BMP&#39;</span><span class="p">,</span><span class="n">file_list1</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">position</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;A&#39;, &#39;09&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="image-processing-pipeline">
+<h2>Image processing pipeline<a class="headerlink" href="#image-processing-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Now we can finally design our small image processing pipeline. This is where notebooks show their strength: we can slowly build-up our pipeline and check each step. We mainly use here the <code class="docutils literal notranslate"><span class="pre">scikit-image</span></code> library which implements all classical operations routinely used in image processing. For plotting we use Matplotlib as well as a custom pacakge called microfilm, which simplifies the plotting of multi-channel images. The latter is not installed by default so we install it now:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">guiwitz</span><span class="o">/</span><span class="n">microfilm</span><span class="o">.</span><span class="n">git</span><span class="nd">@master</span><span class="c1">#egg=microfilm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skimage.io</span>
+<span class="kn">import</span> <span class="nn">skimage.measure</span>
+<span class="kn">import</span> <span class="nn">skimage.filters</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">microfilm</span> <span class="kn">import</span> <span class="n">microplot</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To have a look at our data, we just import a pair of images:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image1</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">file_list1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">image2</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">file_list2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">microplot</span><span class="o">.</span><span class="n">microshow</span><span class="p">([</span><span class="n">image1</span><span class="p">,</span> <span class="n">image2</span><span class="p">],</span> <span class="n">rescale_type</span><span class="o">=</span><span class="s1">&#39;limits&#39;</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span>  <span class="n">cmaps</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pure_green&#39;</span><span class="p">,</span><span class="s1">&#39;pure_blue&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_21_0.png" src="_images/image_processing_21_0.png" />
+</div>
+</div>
+<div class="section" id="thresholding">
+<h3>Thresholding<a class="headerlink" href="#thresholding" title="Permalink to this headline">¶</a></h3>
+<p>As a simplified pipeline, we segment the nuclei just by thresholding. For the flexibility and reproudicility of the analysis it’s best not to set arbitrarily values such as thresholds empirically. Ideally one should use an automated method e.g. Otsu:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">image2</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">image2</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have a mask we also need to detect connected components (particles) i.e. groups of pixels belonging to separate nuclei:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask_lab</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask_lab</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">microplot</span><span class="o">.</span><span class="n">random_cmap</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_26_0.png" src="_images/image_processing_26_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="measure-regions">
+<h3>Measure regions<a class="headerlink" href="#measure-regions" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have identified all the nuclei, we can measure their properties, including the intensity in the other channel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regions</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">regionprops_table</span><span class="p">(</span><span class="n">mask_lab</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">image1</span><span class="p">,</span>
+                                           <span class="n">properties</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="s1">&#39;area&#39;</span><span class="p">,</span><span class="s1">&#39;mean_intensity&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can turn this output into an easy to handle Pandas Dataframe:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">regions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span>
+<span class="n">regions</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>area</th>
+      <th>mean_intensity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>180</td>
+      <td>42.644444</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>64</td>
+      <td>18.656250</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>87</td>
+      <td>3.517241</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>83</td>
+      <td>15.614458</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>160</td>
+      <td>51.668750</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regions</span><span class="p">[</span><span class="s1">&#39;mean_intensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.829120444044293
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="clean-up">
+<h3>Clean-up<a class="headerlink" href="#clean-up" title="Permalink to this headline">¶</a></h3>
+<p>Before we proceed, we look at some of the outputs. For example we check the distribution of sizes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">regions</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_33_0.png" src="_images/image_processing_33_0.png" />
+</div>
+</div>
+<p>We see that we have a small proportion of debris creating a “peak” at small areas. It is reasonable to set a size cutoff (as long as it’s explicitly stated of course!). We can do this by indexing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area_threshold</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">selected_regions</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">regions</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">area_threshold</span><span class="p">]</span>
+<span class="n">selected_regions</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>label             132.488189
+area              178.366142
+mean_intensity     26.706697
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="complete-pipeline">
+<h3>Complete pipeline<a class="headerlink" href="#complete-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>After developing the pipeline step by step, we can now summarize it. It’s good policy to for example create a function wrapping all of our commands. This makes code re-usable and more flexible:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_segmentation</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">image2</span><span class="p">,</span> <span class="n">area_threshold</span><span class="p">):</span>
+    
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">image2</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">image2</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="n">mask_lab</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="n">regions</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">measure</span><span class="o">.</span><span class="n">regionprops_table</span><span class="p">(</span><span class="n">mask_lab</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">image1</span><span class="p">,</span>
+                                           <span class="n">properties</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="s1">&#39;area&#39;</span><span class="p">,</span><span class="s1">&#39;mean_intensity&#39;</span><span class="p">))</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span>
+    <span class="n">selected_regions</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">regions</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">area_threshold</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">selected_regions</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">my_segmentation</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span><span class="n">image2</span><span class="p">,</span> <span class="n">area_threshold</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">output</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>label             132.488189
+area              178.366142
+mean_intensity     26.706697
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="combine-with-metadata">
+<h2>Combine with metadata<a class="headerlink" href="#combine-with-metadata" title="Permalink to this headline">¶</a></h2>
+<p>Now we have a way to extract inforamtion from eaach image and from the file name we can also know from which well the data came. We therefore want to combine already available information (drug treatment) with our extracted information.</p>
+<div class="section" id="import-metadata">
+<h3>Import metadata<a class="headerlink" href="#import-metadata" title="Permalink to this headline">¶</a></h3>
+<p>Let’s start by importing the metadata. They are stored in a text file hosted at the same place as the images. We can simply import it with Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drugs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://data.broadinstitute.org/bbbc/BBBC013/BBBC013_v1_platemap_all.txt&#39;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">drugs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have a list of 96 conditions. To match each confition to a well, we reshape this list into a standard 8x12 grid of data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_amounts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">drugs</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+<span class="n">drug_amounts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To match the positions in the well with the names extracted from the image names, we also rename the rows and columns of the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="n">alphabetical</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+<span class="n">alphabetical</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_amounts</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)},</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">drug_amounts</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="n">i</span><span class="p">:</span> <span class="n">alphabetical</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)},</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">drug_amounts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.98</td>
+      <td>1.95</td>
+      <td>3.91</td>
+      <td>7.81</td>
+      <td>15.63</td>
+      <td>31.25</td>
+      <td>62.5</td>
+      <td>125.0</td>
+      <td>250.0</td>
+      <td>150.0</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>F</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>G</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <td>80.0</td>
+      <td>0.0</td>
+      <td>0.31</td>
+      <td>0.63</td>
+      <td>1.25</td>
+      <td>2.50</td>
+      <td>5.00</td>
+      <td>10.00</td>
+      <td>20.0</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Additionally, we create a second table which contains information on the drug type. We have to create that table manually:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_type</span> <span class="o">=</span> <span class="n">drug_amounts</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">drug_type</span><span class="p">[:]</span> <span class="o">=</span> <span class="s1">&#39;Control&#39;</span>
+
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Wortmannin&#39;</span> 
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LY294002&#39;</span>
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Negative Control&#39;</span>
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Negative Control&#39;</span>
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Positive Control&#39;</span>
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Positive Control&#39;</span>
+<span class="n">drug_type</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Empty&#39;</span>
+
+<span class="n">drug_type</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>Negative Control</td>
+      <td>Empty</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Positive Control</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>Negative Control</td>
+      <td>Empty</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Positive Control</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>Negative Control</td>
+      <td>Empty</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Positive Control</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>Negative Control</td>
+      <td>Empty</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Wortmannin</td>
+      <td>Positive Control</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <td>Positive Control</td>
+      <td>Empty</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>F</th>
+      <td>Positive Control</td>
+      <td>Empty</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>G</th>
+      <td>Positive Control</td>
+      <td>Empty</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <td>Positive Control</td>
+      <td>Empty</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>LY294002</td>
+      <td>Negative Control</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Finally we turn the tables into long format, with each row of the table containing row, column, drug type and amount. For that we pivot the tables and merge them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_amounts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>variable</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A</td>
+      <td>1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B</td>
+      <td>1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>C</td>
+      <td>1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>D</td>
+      <td>1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E</td>
+      <td>1</td>
+      <td>80.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">drug_amounts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">),</span>
+         <span class="n">drug_type</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;variable&#39;</span><span class="p">])</span>
+<span class="n">drug_info</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;column&#39;</span><span class="p">,</span> <span class="s1">&#39;value_x&#39;</span><span class="p">:</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;value_y&#39;</span><span class="p">:</span> <span class="s1">&#39;drug type&#39;</span><span class="p">},</span>
+                 <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">drug_info</span> <span class="o">=</span> <span class="n">drug_info</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;column&#39;</span><span class="p">])</span>
+<span class="n">drug_info</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>amount</th>
+      <th>drug type</th>
+    </tr>
+    <tr>
+      <th>row</th>
+      <th>column</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <th>1</th>
+      <td>80.0</td>
+      <td>Positive Control</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="complete-with-new-information">
+<h3>Complete with new information<a class="headerlink" href="#complete-with-new-information" title="Permalink to this headline">¶</a></h3>
+<p>We are now adding columns to that table which will contain all our results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_info</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">drug_info</span><span class="p">[</span><span class="s1">&#39;intensity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">drug_info</span><span class="p">[</span><span class="s1">&#39;number nuclei&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">drug_info</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>amount</th>
+      <th>drug type</th>
+      <th>area</th>
+      <th>intensity</th>
+      <th>number nuclei</th>
+    </tr>
+    <tr>
+      <th>row</th>
+      <th>column</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <th>1</th>
+      <td>80.0</td>
+      <td>Positive Control</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Finally, using the well location information extracted from the file name, we can complete the table with the <em>measured</em> data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">position</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;A&#39;, &#39;09&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])),</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we repeat the operation for each file in our folder. In addition to the mean values stored in <code class="docutils literal notranslate"><span class="pre">drug_info</span></code> we also keep the full intensity distributions as a list of DataFrames that we can concatenate at the end:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area_threshold</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">full_distributions</span><span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_list1</span><span class="p">,</span> <span class="n">file_list2</span><span class="p">):</span>
+    
+    <span class="n">image1</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
+    <span class="n">image2</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
+
+    <span class="n">regions</span> <span class="o">=</span> <span class="n">my_segmentation</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span><span class="n">image2</span><span class="p">,</span> <span class="n">area_threshold</span><span class="o">=</span><span class="n">area_threshold</span><span class="p">)</span>
+    
+    <span class="n">position</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.*\-.*\-(.*)\-(.*)\.BMP&#39;</span><span class="p">,</span><span class="n">f1</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    
+    <span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])),</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])),</span><span class="s1">&#39;intensity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="s1">&#39;mean_intensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])),</span><span class="s1">&#39;number nuclei&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span>
+
+    <span class="c1"># keep complete distributions</span>
+    <span class="n">distr</span> <span class="o">=</span> <span class="n">regions</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+    <span class="n">distr</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))][</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span>
+    <span class="n">distr</span><span class="p">[</span><span class="s1">&#39;drug type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drug_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))][</span><span class="s1">&#39;drug type&#39;</span><span class="p">]</span>
+    <span class="n">distr</span><span class="p">[</span><span class="s1">&#39;well row&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">distr</span><span class="p">[</span><span class="s1">&#39;well column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">full_distributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distr</span><span class="p">)</span>
+
+<span class="n">full_distributions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">full_distributions</span><span class="p">)</span>
+<span class="n">full_distributions</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;mean_intensity&#39;</span><span class="p">:</span> <span class="s1">&#39;intensity&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>amount</th>
+      <th>drug type</th>
+      <th>area</th>
+      <th>intensity</th>
+      <th>number nuclei</th>
+    </tr>
+    <tr>
+      <th>row</th>
+      <th>column</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>182.006780</td>
+      <td>22.666447</td>
+      <td>295.0</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>178.280255</td>
+      <td>26.306847</td>
+      <td>157.0</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>182.649007</td>
+      <td>33.285372</td>
+      <td>151.0</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <th>1</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>190.920732</td>
+      <td>35.943763</td>
+      <td>164.0</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <th>1</th>
+      <td>80.0</td>
+      <td>Positive Control</td>
+      <td>187.769231</td>
+      <td>49.245178</td>
+      <td>182.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <th>12</th>
+      <td>150.0</td>
+      <td>Positive Control</td>
+      <td>179.518987</td>
+      <td>86.719140</td>
+      <td>158.0</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <th>12</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>165.988571</td>
+      <td>25.168306</td>
+      <td>175.0</td>
+    </tr>
+    <tr>
+      <th>F</th>
+      <th>12</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>173.591398</td>
+      <td>31.286983</td>
+      <td>186.0</td>
+    </tr>
+    <tr>
+      <th>G</th>
+      <th>12</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>164.596026</td>
+      <td>35.620328</td>
+      <td>151.0</td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <th>12</th>
+      <td>0.0</td>
+      <td>Negative Control</td>
+      <td>172.548223</td>
+      <td>30.369579</td>
+      <td>197.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>96 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#drug_info = pd.merge(drug_amounts.stack().reset_index(), drug_type.stack().reset_index(), on=(&#39;level_0&#39;, &#39;level_1&#39;))</span>
+<span class="c1">#drug_info.rename({&#39;level_0&#39;: &#39;well row&#39;, &#39;level_1&#39;: &#39;well column&#39;, &#39;0_x&#39;: &#39;amount&#39;, &#39;0_y&#39;: &#39;drug type&#39;}, axis=1, inplace=True)</span>
+<span class="c1">#drug_info = drug_info.set_index([&#39;well row&#39;, &#39;well column&#39;])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h2>
+<p>We show the statistical analyis in detail in the R notebook. We just quickly show here a series of tools that can be useful if you want to perform your entire analysis in the Python world.</p>
+<p>There are multiple plotting librarie with different “philosphies”. One of the most popoular and efficient ones is seaborn. It is designed to work with DataFrames and handles a lot of the boiler-plate code (e.g. axis naming) automatically:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clean_drug</span> <span class="o">=</span> <span class="n">drug_info</span><span class="p">[</span><span class="n">drug_info</span><span class="p">[</span><span class="s1">&#39;drug type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;LY294002&#39;</span><span class="p">,</span><span class="s1">&#39;Wortmannin&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_drug</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;intensity&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;drug type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_65_0.png" src="_images/image_processing_65_0.png" />
+</div>
+</div>
+<p>We can also perform function fits to the data with packages like scikit-learn or scipy. Here we try a linear fit to the above curve:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">clean_drug</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">)[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">clean_drug</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">)[</span><span class="s1">&#39;intensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">ols</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">ols</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ols</span><span class="o">.</span><span class="n">coef_</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">ols</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear fit&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f6c43398890&gt;
+</pre></div>
+</div>
+<img alt="_images/image_processing_69_1.png" src="_images/image_processing_69_1.png" />
+</div>
+</div>
+<p>We see that the fit is very poor as we rather have a sigmoind response curve to the drug. Let’s try to do such a fit with scipy where we can explicitly creata a fit function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+
+<span class="k">def</span> <span class="nf">sigmoid</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">slope</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="n">slope</span><span class="p">))</span> <span class="o">*</span>  <span class="n">A</span> <span class="o">+</span> <span class="n">C</span>
+
+<span class="n">p</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">sigmoid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sigmoid fit&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_72_0.png" src="_images/image_processing_72_0.png" />
+</div>
+</div>
+<p>Finally we can also look at various histograms. For example we can compare the histograms of teh average nucleus size as a function of drug treatment or the histoggram of the single nuclei size:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_drug</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;drug type&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_74_0.png" src="_images/image_processing_74_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clean_full</span> <span class="o">=</span> <span class="n">full_distributions</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">clean_full_drug</span> <span class="o">=</span> <span class="n">clean_full</span><span class="p">[</span><span class="n">clean_full</span><span class="p">[</span><span class="s1">&#39;drug type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;LY294002&#39;</span><span class="p">,</span><span class="s1">&#39;Wortmannin&#39;</span><span class="p">])]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_full_drug</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;drug type&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_75_0.png" src="_images/image_processing_75_0.png" />
+</div>
+</div>
+<p>This is a good example where looking at the full distribution (minor difference at small sizes) yields a rather different results than looking at the average.</p>
+<p>Histograms are in general useful to understand what happens in an averaged value. For example we can ask whether the increase in intensity as a function of drug concentration is a <em>smooth</em> transition or the results of a <em>bi-modal</em> shift.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_full</span><span class="p">[(</span><span class="n">clean_full</span><span class="o">.</span><span class="n">amount</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">clean_full</span><span class="o">.</span><span class="n">amount</span><span class="o">==</span><span class="mf">7.81</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">clean_full</span><span class="o">.</span><span class="n">amount</span><span class="o">==</span><span class="mi">250</span><span class="p">)],</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;intensity&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">palette</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;hls&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/image_processing_77_0.png" src="_images/image_processing_77_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="export-the-data">
+<h2>Export the data<a class="headerlink" href="#export-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Finally we can export our data as tables that we can then re-use in other software e.g. our statistical analysis R notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_info</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;BBBC013_analyzed.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_distributions</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;BBBC013_analyzed_full.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="notebook_basics.html" title="previous page">Notebook basics</a>
+    <a class='right-next' id="next-link" href="advanced_processing.html" title="next page">Advanced processing</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
