@@ -20,12 +20,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 This lecture accompanies the [Imaging Statistics](https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html) course given at Bern University as part of the [Microscopy Imaging Center](https://www.mic.unibe.ch) trainings.
 
-Based on a series on the [Minitab Blog](https://blog.minitab.com/en/adventures-in-statistics-2/understanding-hypothesis-tests-why-we-need-to-use-hypothesis-tests-in-statistics).
+Based on the [Minitab Blog](https://blog.minitab.com/en/adventures-in-statistics-2/understanding-hypothesis-tests-why-we-need-to-use-hypothesis-tests-in-statistics) series.
 
 Other resources:
 
-> - [Comprehensive Confidence Intervals for Python Developers](https://aegis4048.github.io/comprehensive_confidence_intervals_for_python_developers#population_vs_samples)
-> - [Using t-tests in R](https://statistics.berkeley.edu/computing/r-t-tests)
+* [Comprehensive Confidence Intervals for Python Developers](https://aegis4048.github.io/comprehensive_confidence_intervals_for_python_developers#population_vs_samples)
+* [Using t-tests in R](https://statistics.berkeley.edu/computing/r-t-tests)
+* [Everything You Need To Know about Hypothesis Testing](https://towardsdatascience.com/everything-you-need-to-know-about-hypothesis-testing-part-i-4de9abebbc8a)
 
 ## Why We Need Hypothesis Tests? {.bigger}
 
@@ -45,9 +46,8 @@ How well does a sample statistic estimate an underlying population parameter?
 
 ## Population
 
-> - Let's measure fluorescence intensity (FI) of cells subject to a treatment. 
-> - The FI in single cells varies across the population.
-> - We assume that the true FI follows a normal distribution with mean=5 and SD=1.
+> - Let's measure the mean fluorescence intensity (FI) of cells subject to a treatment. 
+> - The FI in single cells varies across the population and follows a distribution with $\mu = 5$ (mean).
 
 <div class="centered">
 ```{r, fig.height=4}
@@ -56,7 +56,7 @@ nPopSD = 1.
 
 {
   plot(function(x) dnorm(x, mean = nPopMn, sd = nPopSD), 0, 10,
-       xlab = "Fluorescence intensity",
+       xlab = "Fluorescence intensity in single cells",
        ylab = "Density")
   abline(v = 5, lty = 2, col = ggthemes::hc_pal()(3)[1])
   abline(v = c(4, 6), lty = 2, col = ggthemes::hc_pal()(3)[2])
@@ -71,12 +71,13 @@ nPopSD = 1.
 > - In experiments we cannot *access* the true population mean unless we measure everything. 
 > - *Sampling* the reality is the next best thing we can do!
 
-> - A sample consists of the measurement of FI in individual cells.
+
+> - A sample consists of measurements of FI in individual cells.
 > - A sample mean is the mean calculated from a sample.
 </div>
 
 <div class='right' style='float:right;width:45%'>
-![](statsBasics-figure/conf_int_sample_pops.png){width=100%}
+![](statsBasics-figure/populationVSsample.png){width=100%}
 </div>
 
 ## Sample vs population statistic
@@ -85,7 +86,22 @@ nPopSD = 1.
 > - Let's measure FI in 6 different fields of view (FOV), with 10 cells in each FOV. 
 > - We calculate the mean FI for every FOV and obtain 6 sample means.
 > - The mean FI from each FOV is usually far from the population mean (=5)!
-> - For any random sample, the sample mean almost certainly doesn't equal the true mean of the population due to **sampling error**. 
+> - 
+```{r}
+fGenSamples = function(inSampleSz, inSampleN) {
+  sapply(1:inSampleN, 
+         function(x) 
+           mean(rnorm(inSampleSz, nPopMn, nPopSD)))
+}
+
+
+vMeas1Sample = fGenSamples(10, 6)
+
+library(kableExtra)
+vMeas1Sample %>%
+    kbl(col.names = "Sample mean") %>%
+  kable_paper(full_width = F)
+```
 </div>
 
 <div class='right' style='float:right;width:45%'>
@@ -129,18 +145,7 @@ ggplot() +
         panel.grid.minor = element_blank())
 ```
 
-
-```{r}
-fGenSamples = function(inSampleSz, inSampleN) {
-  sapply(1:inSampleN, 
-         function(x) 
-           mean(rnorm(inSampleSz, nPopMn, nPopSD)))
-}
-
-
-vMeas1Sample = fGenSamples(10, 6)
-matrix(vMeas1Sample, 3)
-```
+> - For any random sample, the sample mean almost certainly doesn't equal the true mean of the population due to **sampling error**. 
 </div>
 
 ## Sampling distribution
@@ -195,7 +200,7 @@ fPlotSamples = function(inSampleSz, inSampleN, ...) {
 
 <div class='left' style='float:left;width:48%'>
 > - Fortunately, we can create a plot of the distribution of sample means without collecting many different random samples! 
-> - Instead, we’ll create a probability distribution plot using the t-distribution.
+> - Instead, we’ll create a probability distribution plot using the [t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution).
 </div>
 
 <div class='right' style='float:right;width:48%'>
@@ -203,11 +208,15 @@ fPlotSamples = function(inSampleSz, inSampleN, ...) {
 x = seq(3, 7, 0.01)
 
 nSz1 = 5
-xT1 = (x - nPopMn) / (nPopSD / sqrt(nSz1))
+nSampleSD1 = sd(rnorm(nSz1, mean = nPopMn, sd = nPopSD))
+
+xT1 = (x - nPopMn) / (nSampleSD1 / sqrt(nSz1))
 y1 = dt(xT1, df = nSz1 - 1)
 
 nSz2 = 50
-xT2 = (x - nPopMn) / (nPopSD / sqrt(nSz2))
+nSampleSD2 = sd(rnorm(nSz2, mean = nPopMn, sd = nPopSD))
+
+xT2 = (x - nPopMn) / (nSampleSD2 / sqrt(nSz2))
 y2 = dt(xT2, df = nSz2 - 1)
 
 
@@ -264,31 +273,10 @@ y2 = dt(xT2, df = nSz2 - 1)
 ## Significance
 
 <div class='left' style='float:left;width:48%'>
-In another well, we measured the FI of 5 cells and obtained the mean 6.5.
+> - Let's move to another well. This time we measured the FI of 5 cells, which yielded the mean 6.5.
+> - Is the new sample mean *significantly different* from the population mean?
 
-Is the new sample mean *significantly different* from the population mean?
-</div>
 
-<div class='right' style='float:right;width:48%'>
-```{r, fig.height=5, fig.width=5}
-nSampleMn = 6.5
-
-{
-  plot(x, 
-       dt(xT1, df = nSz1-1),
-       main = "Sampling distribution",
-       xlab = "Fluorescence intensity",
-       ylab = "Density", 
-       type = "l")
-  abline(v = nPopMn, col = "#de3765", lty = 2, lwd = 2)
-  abline(v = nSampleMn, col = "#7cb5ec", lty = 2, lwd = 2)
-}
-```
-</div>
-
-## Significance II
-
-<div class='left' style='float:left;width:48%'>
 > - There is no magic place on the distribution to determine *significant difference*. 
 > - We have a continuous decrease in the probability of obtaining sample means that are farther from the population mean. 
 > - Where to draw the line?
@@ -296,6 +284,8 @@ nSampleMn = 6.5
 
 <div class='right' style='float:right;width:48%'>
 ```{r, fig.height=5, fig.width=5}
+nSampleMn = 6.5
+
 {
   plot(x, 
        dt(xT1, df = nSz1-1),
@@ -317,49 +307,6 @@ The shaded region indicates the probability of finding the sample mean FI.
 
 <div class="centered">
 ```{r, fig.height=3}
-fPlotShadedTdist = function(nSz, nPopMn, nPopSD, nSampleMn = NULL, nFrac, xlim, xn = 100, inv = FALSE) {
-  
-  x = seq(xlim[1], xlim[2], (xlim[2] - xlim[1])/xn )
-  xT = (x - nPopMn) / (nPopSD / sqrt(nSz))
-  y = dt(xT, df = nSz-1)
-  
-  plot(x, 
-       y,
-       main = sprintf("Sampling distribution, shaded %.1f%%", 100*nFrac),
-       xlab = "Fluorescence intensity",
-       ylab = "Density", 
-       type = "l",
-       xlim = xlim,
-       ylim = c(0, 0.4))
-  
-  if (inv) {
-    xL = qt(nFrac/2, df = nSz-1) / sqrt(nSz) + nPopMn
-    xR = qt(1 - nFrac/2, df = nSz-1) / sqrt(nSz) + nPopMn
-    
-    polygon(c(min(x), x[x<=xL], max(x[x<=xL])), 
-            c(0, y[x<=xL], 0), 
-            col="grey80")
-    polygon(c(x[x>=xR], max(x), min(x[x>=xR])), 
-            c(y[x>=xR], 0, 0), 
-            col="grey80")
-  } else {
-    xL = qt((1-nFrac)/2, df = nSz-1) / sqrt(nSz) + nPopMn
-    xR = qt((1 + nFrac)/2, df = nSz-1) / sqrt(nSz) + nPopMn
-    
-    polygon(c(min(x[x>=xL]), x[x>=xL & x<=xR], max(x[x<=xR])), 
-            c(0,             y[x>=xL & x<=xR], 0), 
-            col="grey80")
-    
-  }
-  
-  abline(v = nPopMn, col = "#de3765", lty = 2, lwd = 2)
-  
-  if (!missing(nSampleMn)) {
-    abline(v = nSampleMn, col = "#7cb5ec", lty = 2, lwd = 2)
-  }
-  
-}
-
 fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim, xn = 100, inv, ...) {
   
   x = seq(xlim[1], xlim[2], (xlim[2] - xlim[1])/xn )
@@ -404,8 +351,8 @@ fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim,
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
                    vertLines = c(nPopMn, nSampleMn), 
                    vertLinesCol = c("#de3765", "#7cb5ec"),
-                   nFrac = 0.5, xlim = c(2,8), inv = T, 
-                   main = "Sampling distribution, shaded 50%",
+                   nFrac = 0.1, xlim = c(2,8), inv = T, 
+                   main = "Sampling distribution, shaded 10%",
                    xlab = "Fluorescence intensity",
                    ylab = "Density")  
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
@@ -428,7 +375,7 @@ fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim,
 
 ## Threshold for unusuality
 
-> - If our threshold for *unusuality* is 5%, then the new sample mean (=6.5) IS unusual. 
+> - If our threshold for *unusuality* is 10 or 5%, then the new sample mean (=6.5) IS unusual. 
 
 > - If our threshold for *unusuality* is 1%, then the new sample mean (=6.5) IS NOT unusual. 
 
@@ -439,8 +386,8 @@ fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim,
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
                    vertLines = c(nPopMn, nSampleMn), 
                    vertLinesCol = c("#de3765", "#7cb5ec"),
-                   nFrac = 0.5, xlim = c(2,8), inv = T, 
-                   main = "Sampling distribution, shaded 50%",
+                   nFrac = 0.1, xlim = c(2,8), inv = T, 
+                   main = "Sampling distribution, shaded 10%",
                    xlab = "Fluorescence intensity",
                    ylab = "Density")  
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
@@ -464,16 +411,19 @@ fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim,
 ## Hypothesis testing
 
 <div class='left' style='float:left;width:48%'>
-With this new measurement we're trying to estimate the population mean. It's quite different from 5, but:
+This new measurement is a head-scratcher because it *seems* quite different from 5.
 
-> - is it still the same treatment?
-> - what are the chances to obtain the **sample** mean (=6.5) given the **population** mean (=5)?
-> - let's formulate hypotheses!
+> - Is it still the same treatment?
+> - What are the chances of obtaining the **sample** mean (=6.5) given the **population** mean (=5)?
+> - Let's formulate hypotheses!
 </div>
 
 <div class='right' style='float:right;width:48%'>
 > - Null hypothesis: the population mean equals the hypothesised mean (=5)
 > - Alternative hypothesis: the population mean differs from the hypothesized mean (=5)
+
+
+> - By setting a threshold for *unusuality* we can reject (or not) the null hypothesis.
 </div>
 
 ## Hypothesis testing II
@@ -485,8 +435,8 @@ With this new measurement we're trying to estimate the population mean. It's qui
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
                    vertLines = c(nPopMn, nSampleMn), 
                    vertLinesCol = c("#de3765", "#7cb5ec"),
-                   nFrac = 0.5, xlim = c(2,8), inv = T, 
-                   main = "Sampling distribution, shaded 50%",
+                   nFrac = 0.1, xlim = c(2,8), inv = T, 
+                   main = "Sampling distribution, shaded 10%",
                    xlab = "Fluorescence intensity",
                    ylab = "Density")  
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
@@ -518,8 +468,8 @@ The thresholds for shaded regions determine how far away our sample statistic mu
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
                    vertLines = c(nPopMn, nSampleMn), 
                    vertLinesCol = c("#de3765", "#7cb5ec"),
-                   nFrac = 0.5, xlim = c(2,8), inv = T, 
-                   main = "Sampling distribution, shaded 50%",
+                   nFrac = 0.1, xlim = c(2,8), inv = T, 
+                   main = "Sampling distribution, shaded 10%",
                    xlab = "Fluorescence intensity",
                    ylab = "Density")  
   fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
@@ -547,9 +497,9 @@ The thresholds for shaded regions determine how far away our sample statistic mu
 ## P-value
 
 <div class='left' style='float:left;width:48%'>
-> - We've tested the null hypothesis by looking at the graph. 
-> - How to determine the statistical significance at a chosen level without it?
-> - Let's shade the probability of obtaining a sample mean that is **at least as extreme** in both tails of the distribution ($5 \pm 1.5$).
+> - We've tested the null hypothesis by looking at the *location* of our sample mean with respect to chosen *significance levels*. 
+> - How to determine the statistical significance at a chosen level without looking at the graph?
+> - Let's shade the probability of obtaining our sample mean (=6.5) that is **at least as extreme** in both tails of the distribution ($5 \pm 1.5$).
 </div>
 
 <div class='right' style='float:right;width:48%'>
@@ -576,7 +526,7 @@ fPlotShadedTdist(nSz = nSz1,
 > - This shaded probability represents the likelihood of obtaining a sample mean that is **at least as extreme as** our sample mean (=6.5) in both tails of the distribution if the population mean is 5. 
 > - That’s our P value!
 
-> - When a P value is less than or equal to the chosen significance level, you **reject the null hypothesis**.
+> - When a P value is less than or equal to the chosen significance level, we **reject the null hypothesis**.
 </div>
 
 <div class='right' style='float:right;width:48%'>
@@ -602,15 +552,10 @@ fPlotShadedTdist(nSz = nSz1,
 
 <div class='right' style='float:right;width:48%'>
 ```{r, fig.width=5}
-fPlotShadedTdist(nSz = nSz1, 
-                 nMn = 4.2, nSD = 1, 
-                 vertLines = 4.2, 
-                 vertLinesCol = c("#7cb5ec"),
-                 xlim = c(2,6.4), 
-                 xn = 1000,
-                 main = "Sampling distribution, size = 5",
-                 xlab = "Fluorescence intensity",
-                 ylab = "Density")
+{
+  plot(x = NULL, y = NULL, xlim = c(2, 6.4), ylim = c(0, .4), xlab = "Fluorescence intensity")
+  abline(v = 4.2, lty = 2, lwd = 2, col = "#7cb5ec")
+}
 ```
 </div>
 
@@ -618,7 +563,8 @@ fPlotShadedTdist(nSz = nSz1,
 ## Confidence intervals II
 
 <div class='left' style='float:left;width:48%'>
-> - The **sample** mean (=4.2) is the most likely value for the **population** mean given the information we have.
+> - The **sample** mean (=4.2) is the most likely value for the **population** mean given the **information we have**.
+> - It is a **point estimate**, or a *best guess*, of an unknown population mean.
 > - However, it would not be unusual to obtain different sample means if we drew other random samples from the same population.
 </div>
 
@@ -641,10 +587,10 @@ fPlotShadedTdist(nSz = nSz1,
 
 <div class='left' style='float:left;width:48%'>
 > - To put a number on this, let's shade the inner 95% of the distribution.
+> - 95% is an arbitrary but a commonly accepted range.
+> - A specific CI represents the **margin of error**, or the amount of uncertainty, around the point estimate, which is our single sample mean 4.2.
 > - A confidence **interval** is a range of values that is likely to contain an unknown population parameter.
-> - 95% of the time we would obtain **sample** means in that range. 
-> - A specific CI represents the **margin of error**, or the amount of uncertainty, around the point estimate.
-> - It is NOT about the probability of the **population** mean being in THAT range!
+> - It is NOT the probability of the **population** mean being in THAT range!
 > - The population mean is UNKNOWN and we cannot place it on this graph.
 </div>
 
@@ -667,8 +613,8 @@ fPlotShadedTdist(nSz = nSz1,
 ## CI in hypothesis testing
 
 <div class='left' style='float:left;width:48%'>
-> - If you draw a random sample many times (from the same population!), a certain percentage of the confidence intervals will contain the population mean. 
-> - This percentage is the confidence **level**!
+> - If you draw a random sample many times (from the same population!), a certain percentage of confidence intervals will contain the population mean. 
+> - This percentage is the **confidence level**!
 > - In our case 95% of the time, the confidence interval WILL contain the population mean.
 </div>
 
@@ -742,6 +688,13 @@ fPlotShadedTdist(nSz = nSz1,
 
 </div>
 
+
+----
+
+<div class="centered">
+![](statsBasics-figure/ci-2.gif){width=70%}
+</div>
+
 ## P values vs CI
 
 <div class='left' style='float:left;width:48%'>
@@ -751,9 +704,9 @@ fPlotShadedTdist(nSz = nSz1,
 </div>
 
 <div class='right' style='float:right;width:48%'>
-> - If the P value is less than your significance ($\alpha$) level, the hypothesis test is statistically significant.
+> - If the P value is less than your significance level ($\alpha$), the hypothesis test is statistically significant.
 > - If the confidence interval does not contain the null hypothesis value, the results are statistically significant.
-> - If the P value is less than alpha, the confidence interval will not contain the null hypothesis value.
+> - If the P value is less than $\alpha$, the confidence interval will not contain the null hypothesis value.
 </div>
 
 ## P values vs CI II
@@ -778,14 +731,22 @@ The **confidence level** defines the distance for how close the confidence limit
 
 ```{r, fig.height=4, fig.width=5}
 fPlotShadedTdist(nSz = nSz1, nMn = 4.2, nSD = 1, 
-                 vertLines = c(4.2, 5), 
-                 vertLinesCol = c("#7cb5ec", "#de3765"),
+                 vertLines = c(4.2), 
+                 vertLinesCol = c("#7cb5ec"),
                  nFrac = 0.95, xlim = c(2,8), inv = F, 
                  main = "95% CI for sample mean 4.2",
                  xlab = "Fluorescence intensity",
                  ylab = "Density")  
 ```
 
+</div>
+
+## Type of errors
+
+[What are type I and type II errors?](https://support.minitab.com/en-us/minitab/19/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/type-i-and-type-ii-error/)
+
+<div class="centered">
+![](statsBasics-figure/type1-2error.png){width=80%}
 </div>
 
 ## Pitfalls
