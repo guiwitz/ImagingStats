@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Intro {.normal}
 
-This lecture accompanies the [Imaging Statistics](https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html) course given at Bern University as part of the [Microscopy Imaging Center](https://www.mic.unibe.ch) trainings.
+This lecture accompanies the [Imaging Statistics](https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html) course given at the University of Bern as part of the [Microscopy Imaging Center](https://www.mic.unibe.ch) trainings.
 
 Based on the [Minitab Blog](https://blog.minitab.com/en/adventures-in-statistics-2/understanding-hypothesis-tests-why-we-need-to-use-hypothesis-tests-in-statistics) series.
 
@@ -59,7 +59,6 @@ nPopSD = 1.
        xlab = "Fluorescence intensity in single cells",
        ylab = "Density")
   abline(v = 5, lty = 2, col = ggthemes::hc_pal()(3)[1])
-  abline(v = c(4, 6), lty = 2, col = ggthemes::hc_pal()(3)[2])
 }
 ```
 </div>
@@ -99,7 +98,7 @@ vMeas1Sample = fGenSamples(10, 6)
 
 library(kableExtra)
 vMeas1Sample %>%
-    kbl(col.names = "Sample mean") %>%
+  kbl(col.names = "Sample mean") %>%
   kable_paper(full_width = F)
 ```
 </div>
@@ -547,14 +546,34 @@ fPlotShadedTdist(nSz = nSz1,
 
 <div class='left' style='float:left;width:48%'>
 > - Let's try to estimate the population mean.
-> - We perform a single measurement, from which we obtain the mean FI = 4.2 based on 5 cells.
+> - We sample once by measuring 5 cells.
+> - 
+```{r}
+nSample1 = c(4.273791, 5.064480, 3.419903, 3.749903, 5.079963)
+nSampleMn1 = mean(nSample1)
+nSampleSD1 = sd(nSample1)
+
+nSample1 %>%
+  kbl(col.names = "Sample") %>%
+  kable_paper(full_width = F)
+```
+> -
+```{r, results='asis'}
+cat(sprintf("Sample mean = %f", 
+            nSampleMn1))
+```
+> - 
+```{r, results='asis'}
+cat(sprintf("Sample SD = %f", 
+            nSampleSD1))
+```
 </div>
 
 <div class='right' style='float:right;width:48%'>
 ```{r, fig.width=5}
 {
-  plot(x = NULL, y = NULL, xlim = c(2, 6.4), ylim = c(0, .4), xlab = "Fluorescence intensity")
-  abline(v = 4.2, lty = 2, lwd = 2, col = "#7cb5ec")
+  plot(x = NULL, y = NULL, xlim = c(3, 6), ylim = c(0, .4), xlab = "Fluorescence intensity")
+  abline(v = nSampleMn1, lty = 2, lwd = 2, col = "#7cb5ec")
 }
 ```
 </div>
@@ -563,7 +582,7 @@ fPlotShadedTdist(nSz = nSz1,
 ## Confidence intervals II
 
 <div class='left' style='float:left;width:48%'>
-> - The **sample** mean (=4.2) is the most likely value for the **population** mean given the **information we have**.
+> - The **sample** mean is the most likely value for the **population** mean given the **information we have**.
 > - It is a **point estimate**, or a *best guess*, of an unknown population mean.
 > - However, it would not be unusual to obtain different sample means if we drew other random samples from the same population.
 </div>
@@ -571,10 +590,10 @@ fPlotShadedTdist(nSz = nSz1,
 <div class='right' style='float:right;width:48%'>
 ```{r, fig.width=5}
 fPlotShadedTdist(nSz = nSz1, 
-                 nMn = 4.2, nSD = 1, 
-                 vertLines = 4.2, 
+                 nMn = nSampleMn1, nSD = nSampleSD1, 
+                 vertLines = nSampleMn1, 
                  vertLinesCol = c("#7cb5ec"),
-                 xlim = c(2,6.4), 
+                 xlim = c(3, 6), 
                  xn = 1000,
                  main = "Sampling distribution, size = 5",
                  xlab = "Fluorescence intensity",
@@ -587,8 +606,8 @@ fPlotShadedTdist(nSz = nSz1,
 
 <div class='left' style='float:left;width:48%'>
 > - To put a number on this, let's shade the inner 95% of the distribution.
-> - 95% is an arbitrary but a commonly accepted range.
-> - A specific CI represents the **margin of error**, or the amount of uncertainty, around the point estimate, which is our single sample mean 4.2.
+> - 95% is an arbitrary but a commonly accepted typical range.
+> - A specific CI represents the **margin of error**, or the amount of uncertainty, around the point estimate, which is our single sample mean.
 > - A confidence **interval** is a range of values that is likely to contain an unknown population parameter.
 > - It is NOT the probability of the **population** mean being in THAT range!
 > - The population mean is UNKNOWN and we cannot place it on this graph.
@@ -597,14 +616,14 @@ fPlotShadedTdist(nSz = nSz1,
 <div class='right' style='float:right;width:48%'>
 ```{r, fig.width=5}
 fPlotShadedTdist(nSz = nSz1, 
-                 nMn = 4.2, nSD = 1, 
-                 vertLines = 4.2, 
+                 nMn = nSampleMn1, nSD = nSampleSD1, 
+                 vertLines = nSampleMn1, 
                  vertLinesCol = c("#7cb5ec"),
                  nFrac = .95, 
-                 xlim = c(2,6.4), 
+                 xlim = c(3, 6), 
                  xn = 1000,
                  inv = F,
-                 main = "95% CI for sample mean=4.2",
+                 main = sprintf("95%% CI for sample mean=%.2f", nSampleMn1),
                  xlab = "Fluorescence intensity",
                  ylab = "Density")
 ```
@@ -624,7 +643,7 @@ fPlotShadedTdist(nSz = nSz1,
 {
   par(mfrow = c(3,2))
   fPlotShadedTdist(nSz = nSz1, 
-                   nMn = 4.2, nSD = 1, 
+                   nMn = 4.2, nSD = 0.71, 
                    vertLines = c(4.2, 5), 
                    vertLinesCol = c("#7cb5ec", "#de3765"),
                    nFrac = .95, 
@@ -634,7 +653,7 @@ fPlotShadedTdist(nSz = nSz1,
                    xlab = "",
                    ylab = "Density")
   fPlotShadedTdist(nSz = nSz1, 
-                   nMn = 3.8, nSD = 1, 
+                   nMn = 3.8, nSD = 1.1, 
                    vertLines = c(3.8, 5), 
                    vertLinesCol = c("#7cb5ec", "#de3765"),
                    nFrac = .95, 
@@ -644,7 +663,7 @@ fPlotShadedTdist(nSz = nSz1,
                    xlab = "",
                    ylab = "")
   fPlotShadedTdist(nSz = nSz1, 
-                   nMn = 5.1, nSD = 1, 
+                   nMn = 5.1, nSD = 0.97, 
                    vertLines = c(5.1, 5), 
                    vertLinesCol = c("#7cb5ec", "#de3765"),
                    nFrac = .95, 
@@ -654,7 +673,7 @@ fPlotShadedTdist(nSz = nSz1,
                    xlab = "",
                    ylab = "Density")
   fPlotShadedTdist(nSz = nSz1, 
-                   nMn = 4.5, nSD = 1, 
+                   nMn = 4.5, nSD = 0.8, 
                    vertLines = c(4.5, 5), 
                    vertLinesCol = c("#7cb5ec", "#de3765"),
                    nFrac = .95, 
@@ -664,7 +683,7 @@ fPlotShadedTdist(nSz = nSz1,
                    xlab = "",
                    ylab = "")
   fPlotShadedTdist(nSz = nSz1, 
-                   nMn = 5.6, nSD = 1, 
+                   nMn = 5.6, nSD = 1.2, 
                    vertLines = c(5.6, 5), 
                    vertLinesCol = c("#7cb5ec", "#de3765"),
                    nFrac = .95, 
@@ -715,7 +734,7 @@ fPlotShadedTdist(nSz = nSz1,
 The **significance level** defines the distance the sample mean must be from the null hypothesis to be considered statistically significant.
 
 ```{r, fig.height=4, fig.width=5}
-fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD, 
+fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nSampleSD1, 
                  vertLines = c(nPopMn, nSampleMn), 
                  vertLinesCol = c("#de3765", "#7cb5ec"),
                  nFrac = 0.05, xlim = c(2,8), inv = T, 
@@ -727,18 +746,9 @@ fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nPopSD,
 </div>
 
 <div class='right' style='float:right;width:48%'>
-The **confidence level** defines the distance for how close the confidence limits are to sample mean.
+The **confidence level** represents the percentage of intervals that would include the population parameter if you took samples from the same population again and again.
 
-```{r, fig.height=4, fig.width=5}
-fPlotShadedTdist(nSz = nSz1, nMn = 4.2, nSD = 1, 
-                 vertLines = c(4.2), 
-                 vertLinesCol = c("#7cb5ec"),
-                 nFrac = 0.95, xlim = c(2,8), inv = F, 
-                 main = "95% CI for sample mean 4.2",
-                 xlab = "Fluorescence intensity",
-                 ylab = "Density")  
-```
-
+![](statsBasics-figure/ci-2.gif){width=100%}
 </div>
 
 ## Type of errors

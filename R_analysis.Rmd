@@ -4,7 +4,17 @@ output:
   rmdformats::downcute: default
 ---
 
-# Load required libraries
+# Introduction
+
+This notebook accompanies the [Imaging Statistics](https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html) course given at the University of Bern as part of the [Microscopy Imaging Center](https://www.mic.unibe.ch) trainings.
+
+The goal of this practical session is to work with a benchmark dataset from single-cell fluorescence microscopy, to visualise the data, obtain basic statistics, and to fit a model to a dose response. The [dataset](https://bbbc.broadinstitute.org/BBBC013) comes from the [Broad Bioimage Benchmark Collection](https://bbbc.broadinstitute.org).
+
+> This 96-well plate has images of cytoplasm to nucleus translocation of the Forkhead (FKHR-EGFP) fusion protein in stably transfected human osteosarcoma cells, U2OS. In proliferating cells, FKHR is localized in the cytoplasm. Even without stimulation, Forkhead is constantly moving into the nucleus, but is transported out again by export proteins. Upon inhibition of nuclear export, FKHR accumulates in the nucleus. In this assay, export is inhibited by blocking PI3 kinase / PKB signaling by incubating cells for 1 h with Wortmannin or with the compound LY294002. Both drugs are considered positive controls in the assay. Nuclei are stained with DRAQ, a DNA stain.
+
+![Plate Map](R_analysis-figure/visual_plate_map.png)
+
+# Load R libraries
 
 ```{r setup, message=FALSE, warning=FALSE}
 # Fast data processing with data.table
@@ -30,15 +40,15 @@ library(ggthemes)
 
 # Load data
 
-Column names include spaces. Use the `check.names` parameter to change them to proper names.
+Column names include spaces, which should be avoided. Use the `check.names` parameter to change them to proper names.
 
 ```{r}
-dt = data.table::fread("BBBC013_analyzed_full.csv", check.names = T)
+dat = data.table::fread("BBBC013_analyzed_full.csv", check.names = T)
 
-dt %>%
+dat %>%
   head %>%
-  kbl() %>%
-  kable_paper(full_width = F)
+  kableExtra::kbl() %>%
+  kableExtra::kable_paper(full_width = F)
 ```
 
 # Data preparation
@@ -47,28 +57,30 @@ Add a grouping column to differentiate between wells A-D and E-H, and set the or
 
 ```{r}
 # Add a grouping column
-dt[,
-   group := ifelse(well.row %in% LETTERS[1:4],
-                   "GR1",
-                   "GR2")]
+dat[,
+    group := ifelse(well.row %in% LETTERS[1:4],
+                    "GR1",
+                    "GR2")]
 
 # Set the order of factors
-dt[,
-   drug.type := factor(drug.type, 
-                       levels = c("Empty",
-                                  "Negative Control",
-                                  "Wortmannin",
-                                  "LY294002",
-                                  "Positive Control"))]
+dat[,
+    drug.type := factor(drug.type, 
+                        levels = c("Empty",
+                                   "Negative Control",
+                                   "Wortmannin",
+                                   "LY294002",
+                                   "Positive Control"))]
 ```
 
 
 # Data overview
 
 ```{r, fig.width=8, fig.height=6}
+# Define "dodging" to add space between violins-plots 
+# and align them with box-plots
 dodge <- position_dodge(width = 0.4)
 
-p1 = ggplot2::ggplot(data = dt,
+p1 = ggplot2::ggplot(data = dat,
                      aes(x = as.factor(amount),
                          y = intensity)) +
   ggplot2::geom_violin(aes(fill = drug.type), 
@@ -79,78 +91,143 @@ p1 = ggplot2::ggplot(data = dt,
                         outlier.shape = NA, 
                         position = dodge, 
                         width = 0.1) +
-  #ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(0.1, 10)) +
   ggthemes::scale_fill_tableau(name = "Drug type",
                                palette = "Tableau 10") +
   ggthemes::scale_color_tableau(name = "Drug type",
                                 palette = "Tableau 10") +
-  ggplot2::facet_wrap(~group, ncol = 1, scales = "free_x") +
+  ggplot2::facet_wrap(~group, 
+                      ncol = 1, 
+                      scales = "free_x") +
   ggplot2::xlab("Concentration") +
   ggplot2::ylab("Intensity") +
   ggplot2::theme_bw()
 
 # Interactive plot
-#ggplotly(p1)
+# ggplotly(p1)
+
 p1
 ```
 
 ## Sample size
 
-The number of measurements per group.
+Measurement count per group.
 
-```{r}
-dt[,
-   .N,
-   by = .(group,
-          drug.type)] %>%
-  kbl() %>%
-  kable_paper(full_width = F)
+```{r, fig.width=6, fig.height=4}
+p2 = ggplot2::ggplot(data = dat,
+                     aes(x = as.factor(amount))) +
+  ggplot2::geom_bar(aes(fill = drug.type), 
+                    stat = "count",
+                    position = "dodge") +
+  ggthemes::scale_fill_tableau(name = "Drug type",
+                               palette = "Tableau 10") +
+  ggthemes::scale_color_tableau(name = "Drug type",
+                                palette = "Tableau 10") +
+  ggplot2::facet_wrap(~group, 
+                      ncol = 1, 
+                      scales = "free_x") +
+  ggplot2::xlab("Concentration") +
+  ggplot2::ylab("Count") +
+  ggplot2::theme_bw()
+
+p2
 ```
 
 ## Area vs intensity
 
+Is intensity correlated with the area? It should not and here we verify it visually!
+
 ```{r, fig.width=8, fig.height=6}
-ggplot2::ggplot(dt,
+ggplot2::ggplot(dat,
                 aes(x = area,
                     y = intensity)) +
   ggplot2::geom_point(alpha = 0.05) +
   ggplot2::theme_classic()
 ```
 
+## Assay performance
+
+From the [original paper](https://doi.org/10.1177%2F108705719900400206):
+
+Zhang, J, Chung, TDY, Oldenburg, KR: *A simple statistical parameter for use in evaluation and validation of high throughput screening assays.* J Biomol Screen **1999**;4:67-73.
+
+> The Z′-factor indicates how well separated the positive and negative controls are, given the variation present in both populations. It is a characteristic parameter for the quality of the assay itself, without intervention of test compunds.
+
+![An example of plates with different Z'-factors. Credit: Anika John.](R_analysis-figure/plates-Zprime.png)
+
+Let's quantify the separation between positive and negative controls in our screen using Z'-factor.
+
+```{r}
+# Calculate the mean and standard deviation for controls per group
+datAggr = dat[drug.type %in% c("Negative Control",
+                               "Positive Control"),
+              .(grMn = mean(intensity),
+                grSD = sd(intensity)),
+              by = .(group, drug.type)]
+
+# Convert to wide format such that we have all stats from both controls
+# in the same row
+datAggrWide = datAggr %>%
+  dcast(group ~ drug.type, 
+        value.var = c("grMn", "grSD"))
+
+# Fix column names; remove spaces
+setnames(datAggrWide, 
+         make.names(names(datAggrWide)))
+
+# Calculate Z'
+datAggrWide[,
+            Zprime := 1 - 
+              (3*grSD_Positive.Control + 3*grSD_Negative.Control) / 
+              abs(grMn_Positive.Control - grMn_Negative.Control)]
+
+datAggrWide %>%
+  kableExtra::kbl(digits = 2) %>%
+  kableExtra::kable_paper(full_width = F, )
+```
+
+Thresholds for Z'-factor:
+
+* $>0.5$ is considered an excellent assay,
+* $>0$ is potentially screenable,
+* $<=0$ distinguishing between positive and negative controls is difficult or impossible.
+
+Explore quantitative concepts of [high-content screening](https://en.wikipedia.org/wiki/High-content_screening "External link to Wikipedia"), such as z-score, z-factor, z-prime, normalised percentage inhibition, standardized mean difference, interactively with the [screenQC](https://macdobry.shinyapps.io/screenQC/ "External link to a running app") web-app. Source code available on [GitHub](https://github.com/dmattek/screenQC "External link to GitHub").
 
 # Normalisation
 
 Normalised Percentage Activation: $$NPA = \frac{meas - CTRL_-}{CTRL_+ - CTRL_-}$$
 
-Where $CTRL_-$ and $CTRL_+$ are mean negative and positive controls, respectively.
+Where $CTRL_-$ and $CTRL_+$ are mean negative and positive controls, respectively, and $meas$ is the measurement in a single cell. 
 
 ```{r}
-#  Add a column with the mean intensity of the negative control for each group
-dt[,
-   mn.negctrl := mean(.SD[drug.type == "Negative Control",
-                          intensity]),
-   by = group]
+#  Add a column with the mean intensity of the negative control 
+# for each group
+dat[,
+    mn.negctrl := mean(.SD[drug.type == "Negative Control",
+                           intensity]),
+    by = group]
 
 
-# Add a column with the mean intensity of the positive control for each group
-dt[,
-   mn.posctrl := mean(.SD[drug.type == "Positive Control", 
-                          intensity]),
-   by = group]
+# Add a column with the mean intensity of the positive control 
+# for each group
+dat[,
+    mn.posctrl := mean(.SD[drug.type == "Positive Control", 
+                           intensity]),
+    by = group]
 
-# Calculate NPA
-dt[,
-   npa := (intensity - mn.negctrl) / (mn.posctrl - mn.negctrl)]
+# Calculate NPA for EACH measurement
+dat[,
+    npa := (intensity - mn.negctrl) / (mn.posctrl - mn.negctrl)]
 
 # Clean; remove temporary columns
-dt[,
-   c("mn.negctrl", "mn.posctrl") := NULL]
+dat[,
+    c("mn.negctrl", "mn.posctrl") := NULL]
 ```
 
 Plot of the normalised intensity.
 
 ```{r, fig.width=8, fig.height=6}
-ggplot2::ggplot(data = dt,
+ggplot2::ggplot(data = dat,
                 aes(x = as.factor(amount),
                     y = npa)) +
   ggplot2::geom_violin(aes(fill = drug.type), 
@@ -161,13 +238,14 @@ ggplot2::ggplot(data = dt,
                         outlier.shape = NA, 
                         position = dodge, 
                         width = 0.1) +
-  #ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(0.1, 10)) +
   ggthemes::scale_fill_tableau(name = "Drug type",
                                palette = "Tableau 10") +
   ggthemes::scale_color_tableau(name = "Drug type",
                                 palette = "Tableau 10") +
   ggplot2::scale_y_continuous(labels = scales::percent) +
-  ggplot2::facet_wrap(~group, ncol = 1, scales = "free_x") +
+  ggplot2::facet_wrap(~group, 
+                      ncol = 1, 
+                      scales = "free_x") +
   ggplot2::xlab("Concentration") +
   ggplot2::ylab("NPA") +
   ggplot2::theme_bw()
@@ -181,11 +259,9 @@ Calculate EC50, i.e. concentration that induces a response halfway between the b
 
 Using the [drc package](https://cran.r-project.org/web/packages/drc/).
 
-[Dose Response Modelling in R](http://www.darrenkoppel.com/2020/09/04/dose-response-modelling-and-model-selection-in-r/)
+[Dose Response Modelling in R](http://www.darrenkoppel.com/2020/09/04/dose-response-modelling-and-model-selection-in-r/) provides a good summary of the process. 
 
-
-
-# 3-parameter Hill function
+## 3-parameter Hill function
 
 The three-parameter log-logistic dose response function with lower limit 0 is: $$f(x) = \frac{d}{1+\exp(b(\log(x)-\log(e)))}$$
 
@@ -197,29 +273,34 @@ Where:
 - $x$ is the dose.
 
 ```{r}
+# Parameters of the log-logistic dose response function
 b = -2
 d = 2
 e = 2
 
-mySigF = function(x) { d / ( 1 + exp(b * ( log(x) - log(e) )) ) }
+# Define the log-logistic dose response function
+mySigF = function(x, d, b, e) { 
+  d / ( 1 + exp(b * ( log(x) - log(e) )) ) 
+}
 
 xarg = 10^seq(-3,3,0.1)
 
 {
-  plot(xarg, mySigF(xarg), type = "l", log = "x")
+  plot(xarg, mySigF(xarg, d, b, e), type = "l", log = "x")
   abline(v = e, lty = 2)
 }
 ```
 
-# Fitting
+## Fitting
 
-The default non-robust least squares estimation ("mean").
-
+We use the default non-robust least squares estimation ("mean") method to fit the dose response to the single-cell data.
 
 ```{r}
 drfit = drc::drm(formula = npa ~ amount,
                  curveid = group,
-                 data = dt[drug.type %in% c("Negative Control", "LY294002", "Wortmannin")],
+                 data = dat[drug.type %in% c("Negative Control", 
+                                             "LY294002", 
+                                             "Wortmannin")],
                  fct = LL.3())
 
 summary(drfit)
@@ -242,7 +323,7 @@ plot(drfit,
 The estimation of the effective dose (EC50 / ED50 / IC50), i.e. the dose that induces the half-maximum response.
 
 ```{r}
-drc::ED(drfit, 50, interval = "delta")
+drc::ED(drfit, respLev = 50, interval = "delta")
 ```
 
 ## Relative potency
@@ -250,7 +331,7 @@ drc::ED(drfit, 50, interval = "delta")
 Relative potency calculated as the ratio of ED50 estimates for both groups.
 
 ```{r}
-drc::EDcomp(drfit, c(50, 50), interval = "delta")
+drc::EDcomp(drfit, percVec = c(50, 50), interval = "delta")
 ```
 
 ## Slope comparison 
@@ -258,7 +339,7 @@ drc::EDcomp(drfit, c(50, 50), interval = "delta")
 Comparison of slopes by means of a z-test for estimates from both groups.
 
 ```{r}
-drc::compParm(drfit, "b", "-")
+drc::compParm(drfit, strVal = "b", operator = "-")
 ```
 
 
