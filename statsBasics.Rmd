@@ -10,6 +10,7 @@ output:
     widescreen: true
     smaller: true
     logo: statsBasics-figure/UniBeLogo.png
+    css: styles.css
 ---
 
 ```{r include = FALSE}
@@ -288,7 +289,7 @@ nSampleMn = 6.5
 {
   plot(x, 
        dt(xT1, df = nSz1-1),
-       main = "Sampling distribution",
+       main = sprintf("Sampling distribution, size = %d", nSz1),
        xlab = "Fluorescence intensity",
        ylab = "Density", 
        type = "l")
@@ -714,6 +715,24 @@ fPlotShadedTdist(nSz = nSz1,
 ![](statsBasics-figure/ci-2.gif){width=70%}
 </div>
 
+## Example of CI
+
+From [Khan Academy](https://www.khanacademy.org/math/ap-statistics/estimating-confidence-ap/introduction-confidence-intervals/a/interpreting-confidence-levels-and-confidence-intervals):
+
+> A baseball coach was curious about the true mean speed of fastball pitches in his league. The coach recorded the speed in kilometers per hour of each fastball in a random sample of 
+100 pitches and constructed a 95%, percent confidence interval for the mean speed. The resulting interval was (110,120).
+
+
+<div class="green2">Correct statement:</div>
+
+We're 95% **confident** that the interval (110,120) captured the true mean pitch speed.
+
+<div class="red2">Incorrect statement:</div>
+
+> - There is a 95% **chance** that the true mean is within the (110, 120) interval.
+> - About 95% of pitches in the sample were between 110 and 120.
+> - If the coach took another sample of 100 pitches, there's a 95% chance the sample mean would be between 110 and 120.
+
 ## P values vs CI
 
 <div class='left' style='float:left;width:48%'>
@@ -738,7 +757,7 @@ fPlotShadedTdist(nSz = nSz1, nMn = nPopMn, nSD = nSampleSD1,
                  vertLines = c(nPopMn, nSampleMn), 
                  vertLinesCol = c("#de3765", "#7cb5ec"),
                  nFrac = 0.05, xlim = c(2,8), inv = T, 
-                 main = "Sampling distribution, shaded 1%",
+                 main = "Sampling distribution, shaded 5%",
                  xlab = "Fluorescence intensity",
                  ylab = "Density")  
 ```
@@ -762,16 +781,16 @@ The **confidence level** represents the percentage of intervals that would inclu
 ## Pitfalls
 
 <div class='left' style='float:left;width:48%'>
-> - The P-value is not a "score".
-> - The P-value is NOT the probability that the null hypothesis is true.
-> - It is the probability of obtaining an effect at least as extreme as the one in your sample data, assuming that the null hypothesis is true.
+> - <div class="red2">The P-value is not a "score".</div>
+> - <div class="red2">The P-value is NOT the probability that the null hypothesis is true.</div>
+> - <div class="blue2">It is the probability of obtaining an effect at least as extreme as the one in your sample data, assuming that the null hypothesis is true.</div>
 </div>
 
 <div class='right' style='float:right;width:48%'>
-> - The confidence level is NOT the probability that a specific CI contains the population parameter.
-> - It is a range of values that is likely to contain an **unknown population parameter**. 
+> - <div class="red2">The confidence level is NOT the probability that a specific CI contains the population parameter.</div>
+> - <div class="blue2">It is a range of values that is likely to contain an **unknown population parameter**.</div>
 > - If you draw a random sample many times, a certain percentage of CIs will contain the population parameter. 
-> - This percentage is the confidence level.
+> - This percentage is the [confidence level](https://www.khanacademy.org/math/ap-statistics/estimating-confidence-ap/introduction-confidence-intervals/v/confidence-intervals-and-margin-of-error).
 </div>
 
 

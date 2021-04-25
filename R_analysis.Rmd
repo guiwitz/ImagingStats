@@ -152,6 +152,9 @@ Zhang, J, Chung, TDY, Oldenburg, KR: *A simple statistical parameter for use in 
 
 > The Z′-factor indicates how well separated the positive and negative controls are, given the variation present in both populations. It is a characteristic parameter for the quality of the assay itself, without intervention of test compunds.
 
+$$ Z' = 1 - \frac{3\sigma_{C+} + 3\sigma_{C-}}{|\mu_{C+} - \mu_{C-}|}$$
+Where, $\mu$ and $\sigma$ are the mean and standard deviation of the positive ($C+$) and negative ($C-$) controls.
+
 ![An example of plates with different Z'-factors. Credit: Anika John.](R_analysis-figure/plates-Zprime.png)
 
 Let's quantify the separation between positive and negative controls in our screen using Z'-factor.
