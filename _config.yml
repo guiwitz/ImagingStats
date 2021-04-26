@@ -8,3 +8,7 @@ execute:
 repository:
   url: https://github.com/guiwitz/ImagingStats
   use_repository_button: true
+
+sphinx:
+  config:
+    html_extra_path: ['rise_presentation']
