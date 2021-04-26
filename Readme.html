@@ -173,6 +173,36 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-processing">
+   Image processing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-analysis">
+   Statistical analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#presentation">
+     Presentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notebooks">
+     Notebooks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -181,15 +211,32 @@
         
               <div>
                 
-  <p>To open in Jupyter: <a class="reference external" href="https://mybinder.org/v2/gh/guiwitz/ImagingStats/HEAD"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
-<p>To open in Google Colab
-<a class="reference external" href="https://colab.research.google.com/github/guiwitz/ImagingStats/blob/master"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p>To open in RStudio:<a class="reference external" href="https://mybinder.org/v2/gh/guiwitz/ImagingStats/HEAD?urlpath=rstudio"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+  <p>To open in Jupyter: <a class="reference external" href="https://mybinder.org/v2/gh/guiwitz/ImagingStats/f9f9450ca7091dd2a53aad9bd869840c565c14d7"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<p>To open in Google Colab: <a class="reference external" href="https://colab.research.google.com/github/guiwitz/ImagingStats/blob/master"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>To open in RStudio: <a class="reference external" href="https://mybinder.org/v2/gh/guiwitz/ImagingStats/f9f9450ca7091dd2a53aad9bd869840c565c14d7?urlpath=rstudio"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
 <div class="section" id="imaging-statistics">
 <h1>Imaging statistics<a class="headerlink" href="#imaging-statistics" title="Permalink to this headline">¶</a></h1>
 <p>This is the repository containing the material for the Imaging statistics course given at Bern University in the frame of the Microscopy Imaging Center trainings. Material has been created by Guillaume Witz (Bern University, MIC-ScITS) and Maciej Dobrzynski (Bern University, Cellular Dynamics Lab).</p>
-<p>The course illustrates an image processing pipeline from data download to statistical analysis realized in Python and R. Notebooks can be rn interactively either via the <a class="reference external" href="https://mybinder.org/">mybinder</a> service or via Google Colab using the badges at the top of this Readme.</p>
+<p>The course illustrates an image processing pipeline from data download to statistical analysis realized in Python and R. Notebooks can be run interactively either via the <a class="reference external" href="https://mybinder.org/">mybinder</a> service or via Google Colab using the badges at the top of this Readme.</p>
+<div class="section" id="image-processing">
+<h2>Image processing<a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h2>
+<p>The image processing part of the course is done in Python. The <a class="reference internal" href="image_processing.html"><span class="doc std std-doc">image_processing.ipynb</span></a> notebook presents a classical thresholding-based segmentation, and also highlights the “data science” aspects of an analysis pipeline like file parsing or extraction and organisation of extracted data into tables.</p>
+<p>The <a class="reference internal" href="advanced_processing.html"><span class="doc std std-doc">advanced_processing.ipynb</span></a> presents an alternative segmentation strategy and in particular shows how easy it can be to deploy Deep Learning based solutions in Python as done here with the segmentation algorithm <a class="reference external" href="http://www.cellpose.org/">cellpose</a>.</p>
+<p>Both notebooks can be run on Binder and Google Colab. In particular the second one benefits from using the free GPU from Colab to run cellpose (cellpose might not work properly on Binder because of the limited RAM).</p>
+<p>Finally the <span class="xref myst">image_processing.ipynb</span> notebook can also be run as a slide presentation via the <a class="reference external" href="https://rise.readthedocs.io/en/stable/">RISE</a> package in Jupyter (e.g on binder).</p>
+</div>
+<div class="section" id="statistical-analysis">
+<h2>Statistical analysis<a class="headerlink" href="#statistical-analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="presentation">
+<h3>Presentation<a class="headerlink" href="#presentation" title="Permalink to this headline">¶</a></h3>
+<p>The presentation on basics statistics can be found as <span class="xref myst">HTML file</span> or <span class="xref myst">R markdown file</span> in this repository.</p>
+</div>
+<div class="section" id="notebooks">
+<h3>Notebooks<a class="headerlink" href="#notebooks" title="Permalink to this headline">¶</a></h3>
+<p>The statistical analysis of the data extracted in the image processing part are visible in multiple files names <code class="docutils literal notranslate"><span class="pre">R_analysis</span></code>. The <span class="xref myst">R_analysis.Rmd</span> can be executed directly in RStudio by using the appropriate binder badge (top of this document). The <a class="reference internal" href="R_analysis.html"><span class="doc std std-doc">R_analysis.ipynb</span></a> notebook can be run either in Jupyter on Binder or directly in Colab. The possibility to run R on Colab is still experimental and a few bugs or package incompatibilities might remain.</p>
 <div class="toctree-wrapper compound">
+</div>
+</div>
 </div>
 </div>
 
