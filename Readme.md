@@ -1,6 +1,8 @@
 To open in Jupyter: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/guiwitz/ImagingStats/HEAD)
+
 To open in Google Colab
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/guiwitz/ImagingStats/blob/master)
+
 To open in RStudio:[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/guiwitz/ImagingStats/HEAD?urlpath=rstudio)
 
 # Imaging statistics
