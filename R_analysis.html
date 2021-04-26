@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>R Notebook for Imaging Stats MIC Course &#8212; Imaging statistics</title>
+    <title>Introduction &#8212; Imaging statistics</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -106,7 +106,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   R Notebook for Imaging Stats MIC Course
+   Introduction
   </a>
  </li>
 </ul>
@@ -197,74 +197,84 @@
             </div>
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#load-required-libraries">
-   Load required libraries
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Introduction
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-r-libraries">
+   Load R libraries
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-data">
    Load data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-preparation">
    Data preparation
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-overview">
    Data overview
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sample-size">
      Sample size
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#area-vs-intensity">
      Area vs intensity
     </a>
    </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assay-performance">
+     Assay performance
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#normalisation">
    Normalisation
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#fit-a-sigmoid-response">
    Fit a sigmoid response
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parameter-hill-function">
-   3-parameter Hill function
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting">
-   Fitting
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parameter-hill-function">
+     3-parameter Hill function
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fitting">
+     Fitting
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#fitted-model">
      Fitted model
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#fitted-ed50">
      Fitted ED50
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#relative-potency">
      Relative potency
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#slope-comparison">
      Slope comparison
     </a>
@@ -282,20 +292,30 @@
         
               <div>
                 
-  <div class="section" id="r-notebook-for-imaging-stats-mic-course">
-<h1>R Notebook for Imaging Stats MIC Course<a class="headerlink" href="#r-notebook-for-imaging-stats-mic-course" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="load-required-libraries">
-<h2>Load required libraries<a class="headerlink" href="#load-required-libraries" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This notebook accompanies the <a class="reference external" href="https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html">Imaging Statistics</a> course given at the University of Bern as part of the <a class="reference external" href="https://www.mic.unibe.ch">Microscopy Imaging Center</a> trainings.</p>
+<p>The goal of this practical session is to work with a benchmark dataset from single-cell fluorescence microscopy, to visualise the data, obtain basic statistics, and to fit a model to a dose response. The <a class="reference external" href="https://bbbc.broadinstitute.org/BBBC013">dataset</a> comes from the <a class="reference external" href="https://bbbc.broadinstitute.org">Broad Bioimage Benchmark Collection</a>.</p>
+<blockquote>
+<div><p>This 96-well plate has images of cytoplasm to nucleus translocation of the Forkhead (FKHR-EGFP) fusion protein in stably transfected human osteosarcoma cells, U2OS. In proliferating cells, FKHR is localized in the cytoplasm. Even without stimulation, Forkhead is constantly moving into the nucleus, but is transported out again by export proteins. Upon inhibition of nuclear export, FKHR accumulates in the nucleus. In this assay, export is inhibited by blocking PI3 kinase / PKB signaling by incubating cells for 1 h with Wortmannin or with the compound LY294002. Both drugs are considered positive controls in the assay. Nuclei are stained with DRAQ, a DNA stain.</p>
+</div></blockquote>
+<p><img alt="Plate Map" src="_images/visual_plate_map.png" /></p>
+</div>
+<div class="section" id="load-r-libraries">
+<h1>Load R libraries<a class="headerlink" href="#load-r-libraries" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;data.table&quot;</span><span class="p">)</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;drc&quot;</span><span class="p">)</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;kableExtra&quot;</span><span class="p">)</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;ggplot2&quot;</span><span class="p">)</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;scales&quot;</span><span class="p">)</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;ggthemes&quot;</span><span class="p">)</span>
-
-<span class="c1"># Fast data processing with data.table</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Colab</span>
+<span class="c1">#install.packages(&quot;drc&quot;)</span>
+<span class="c1">#install.packages(&quot;kableExtra&quot;)</span>
+<span class="c1">#install.packages(&quot;ggthemes&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fast data processing with data.table</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
 
 <span class="c1"># Modelling of the dose response</span>
@@ -313,124 +333,149 @@
 
 <span class="c1"># Interactive plots</span>
 <span class="c1">#library(plotly)</span>
+
+<span class="nf">library</span><span class="p">(</span><span class="n">IRdisplay</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: MASS
+
+
+&#39;drc&#39; has been loaded.
+
+
+Please cite R and &#39;drc&#39; if used for a publication,
+
+for references type &#39;citation()&#39; and &#39;citation(&#39;drc&#39;)&#39;.
+
+
+
+Attaching package: ‘drc’
+
+
+The following objects are masked from ‘package:stats’:
+
+    gaussian, getInitial
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="load-data">
-<h2>Load data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
-<p>Column names include spaces. Use the <code class="docutils literal notranslate"><span class="pre">check.names</span></code> parameter to change them to proper names.</p>
+<h1>Load data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h1>
+<p>Column names include spaces, which should be avoided. Use the <code class="docutils literal notranslate"><span class="pre">check.names</span></code> parameter to change them to proper names.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;BBBC013_analyzed_full.csv&quot;</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">data.table</span><span class="o">::</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;https://raw.githubusercontent.com/guiwitz/ImagingStats/master/BBBC013_analyzed_full.csv&quot;</span><span class="p">,</span> <span class="n">check.names</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
 
-<span class="n">dt</span> <span class="o">%&gt;%</span>
+<span class="n">dat</span> <span class="o">%&gt;%</span>
   <span class="n">head</span> <span class="o">%&gt;%</span>
-  <span class="nf">kbl</span><span class="p">()</span> <span class="o">%&gt;%</span>
-  <span class="nf">kable_paper</span><span class="p">(</span><span class="n">full_width</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+  <span class="n">kableExtra</span><span class="o">::</span><span class="nf">kbl</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">kableExtra</span><span class="o">::</span><span class="nf">kable_paper</span><span class="p">(</span><span class="n">full_width</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">as.character</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">IRdisplay</span><span class="o">::</span><span class="nf">display_html</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;table class=&quot; lightable-paper&quot; style=&#39;font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;&#39;&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; area &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; intensity &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; amount &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; drug.type &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; well.row &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; well.column &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 115 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 44.026087 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 123 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 33.609756 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 388 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 8.724227 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 101 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 21.158416 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 159 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 14.389937 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 183 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 4.737705 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; A &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> area </th>
+   <th style="text-align:right;"> intensity </th>
+   <th style="text-align:right;"> amount </th>
+   <th style="text-align:left;"> drug.type </th>
+   <th style="text-align:left;"> well.row </th>
+   <th style="text-align:right;"> well.column </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 44.026087 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 123 </td>
+   <td style="text-align:right;"> 33.609756 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 388 </td>
+   <td style="text-align:right;"> 8.724227 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 21.158416 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 159 </td>
+   <td style="text-align:right;"> 14.389937 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 183 </td>
+   <td style="text-align:right;"> 4.737705 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> Negative Control </td>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table></div></div>
 </div>
 </div>
 <div class="section" id="data-preparation">
-<h2>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<h1>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h1>
 <p>Add a grouping column to differentiate between wells A-D and E-H, and set the order of factors in the <code class="docutils literal notranslate"><span class="pre">drug.type</span></code> column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a grouping column</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="n">group</span> <span class="o">:=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">well.row</span> <span class="o">%in%</span> <span class="kc">LETTERS</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">],</span>
-                   <span class="s">&quot;GR1&quot;</span><span class="p">,</span>
-                   <span class="s">&quot;GR2&quot;</span><span class="p">)]</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="n">group</span> <span class="o">:=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">well.row</span> <span class="o">%in%</span> <span class="kc">LETTERS</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">],</span>
+                    <span class="s">&quot;GR1&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;GR2&quot;</span><span class="p">)]</span>
 
 <span class="c1"># Set the order of factors</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="n">drug.type</span> <span class="o">:=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">drug.type</span><span class="p">,</span> 
-                       <span class="n">levels</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Empty&quot;</span><span class="p">,</span>
-                                  <span class="s">&quot;Negative Control&quot;</span><span class="p">,</span>
-                                  <span class="s">&quot;Wortmannin&quot;</span><span class="p">,</span>
-                                  <span class="s">&quot;LY294002&quot;</span><span class="p">,</span>
-                                  <span class="s">&quot;Positive Control&quot;</span><span class="p">))]</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="n">drug.type</span> <span class="o">:=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">drug.type</span><span class="p">,</span> 
+                        <span class="n">levels</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Empty&quot;</span><span class="p">,</span>
+                                   <span class="s">&quot;Negative Control&quot;</span><span class="p">,</span>
+                                   <span class="s">&quot;Wortmannin&quot;</span><span class="p">,</span>
+                                   <span class="s">&quot;LY294002&quot;</span><span class="p">,</span>
+                                   <span class="s">&quot;Positive Control&quot;</span><span class="p">))]</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="data-overview">
-<h2>Data overview<a class="headerlink" href="#data-overview" title="Permalink to this headline">¶</a></h2>
+<h1>Data overview<a class="headerlink" href="#data-overview" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dodge</span> <span class="o">&lt;-</span> <span class="nf">position_dodge</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.4</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define &quot;dodging&quot; to add space between violins-plots </span>
+<span class="c1"># and align them with box-plots</span>
+<span class="n">dodge</span> <span class="o">&lt;-</span> <span class="nf">position_dodge</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.4</span><span class="p">)</span>
 
-<span class="n">p1</span> <span class="o">=</span> <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dt</span><span class="p">,</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dat</span><span class="p">,</span>
                      <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">amount</span><span class="p">),</span>
                          <span class="n">y</span> <span class="o">=</span> <span class="n">intensity</span><span class="p">))</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">geom_violin</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">drug.type</span><span class="p">),</span> 
@@ -441,18 +486,20 @@
                         <span class="n">outlier.shape</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> 
                         <span class="n">position</span> <span class="o">=</span> <span class="n">dodge</span><span class="p">,</span> 
                         <span class="n">width</span> <span class="o">=</span> <span class="m">0.1</span><span class="p">)</span> <span class="o">+</span>
-  <span class="c1">#ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(0.1, 10)) +</span>
   <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_fill_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
                                <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_color_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
                                 <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">group</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free_x&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">group</span><span class="p">,</span> 
+                      <span class="n">ncol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> 
+                      <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free_x&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Concentration&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Intensity&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">theme_bw</span><span class="p">()</span>
 
 <span class="c1"># Interactive plot</span>
-<span class="c1">#ggplotly(p1)</span>
+<span class="c1"># ggplotly(p1)</span>
+
 <span class="n">p1</span>
 </pre></div>
 </div>
@@ -462,81 +509,41 @@
 </div>
 </div>
 <div class="section" id="sample-size">
-<h3>Sample size<a class="headerlink" href="#sample-size" title="Permalink to this headline">¶</a></h3>
-<p>The number of measurements per group.</p>
+<h2>Sample size<a class="headerlink" href="#sample-size" title="Permalink to this headline">¶</a></h2>
+<p>Measurement count per group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span><span class="p">[,</span>
-   <span class="n">.N</span><span class="p">,</span>
-   <span class="n">by</span> <span class="o">=</span> <span class="nf">.</span><span class="p">(</span><span class="n">group</span><span class="p">,</span>
-          <span class="n">drug.type</span><span class="p">)]</span> <span class="o">%&gt;%</span>
-  <span class="nf">kbl</span><span class="p">()</span> <span class="o">%&gt;%</span>
-  <span class="nf">kable_paper</span><span class="p">(</span><span class="n">full_width</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span> <span class="o">=</span> <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dat</span><span class="p">,</span>
+                     <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">amount</span><span class="p">)))</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">drug.type</span><span class="p">),</span> 
+                    <span class="n">stat</span> <span class="o">=</span> <span class="s">&quot;count&quot;</span><span class="p">,</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="s">&quot;dodge&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_fill_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
+                               <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_color_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
+                                <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">group</span><span class="p">,</span> 
+                      <span class="n">ncol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> 
+                      <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free_x&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Concentration&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Count&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">theme_bw</span><span class="p">()</span>
+
+<span class="n">p2</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;table class=&quot; lightable-paper&quot; style=&#39;font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;&#39;&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; group &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; drug.type &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; N &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR1 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 767 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR1 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Empty &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 812 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR1 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Wortmannin &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 6464 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR1 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Positive Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 650 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Positive Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 901 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Empty &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 681 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; LY294002 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 5925 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; GR2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; Negative Control &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 709 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</pre></div>
-</div>
+<img alt="_images/R_analysis_10_0.png" src="_images/R_analysis_10_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="area-vs-intensity">
-<h3>Area vs intensity<a class="headerlink" href="#area-vs-intensity" title="Permalink to this headline">¶</a></h3>
+<h2>Area vs intensity<a class="headerlink" href="#area-vs-intensity" title="Permalink to this headline">¶</a></h2>
+<p>Is intensity correlated with the area? It should not and here we verify it visually!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span>
                 <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">area</span><span class="p">,</span>
                     <span class="n">y</span> <span class="o">=</span> <span class="n">intensity</span><span class="p">))</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.05</span><span class="p">)</span> <span class="o">+</span>
@@ -549,33 +556,120 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="normalisation">
-<h2>Normalisation<a class="headerlink" href="#normalisation" title="Permalink to this headline">¶</a></h2>
-<p>Normalised Percentage Activation: $<span class="math notranslate nohighlight">\(NPA = \frac{meas - CTRL_-}{CTRL_+ - CTRL_-}\)</span>$</p>
-<p>Where <span class="math notranslate nohighlight">\(CTRL_-\)</span> and <span class="math notranslate nohighlight">\(CTRL_+\)</span> are mean negative and positive controls, respectively.</p>
+<div class="section" id="assay-performance">
+<h2>Assay performance<a class="headerlink" href="#assay-performance" title="Permalink to this headline">¶</a></h2>
+<p>From the <a class="reference external" href="https://doi.org/10.1177%2F108705719900400206">original paper</a>:</p>
+<p>Zhang, J, Chung, TDY, Oldenburg, KR: <em>A simple statistical parameter for use in evaluation and validation of high throughput screening assays.</em> J Biomol Screen <strong>1999</strong>;4:67-73.</p>
+<blockquote>
+<div><p>The Z′-factor indicates how well separated the positive and negative controls are, given the variation present in both populations. It is a characteristic parameter for the quality of the assay itself, without intervention of test compunds.</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[ Z' = 1 - \frac{3\sigma_{C+} + 3\sigma_{C-}}{|\mu_{C+} - \mu_{C-}|}\]</div>
+<p>Where, <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> are the mean and standard deviation of the positive (<span class="math notranslate nohighlight">\(C+\)</span>) and negative (<span class="math notranslate nohighlight">\(C-\)</span>) controls.</p>
+<p><img alt="An example of plates with different Z'-factors. Credit: Anika John." src="_images/plates-Zprime.png" /></p>
+<p>Let’s quantify the separation between positive and negative controls in our screen using Z’-factor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#  Add a column with the mean intensity of the negative control for each group</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="n">mn.negctrl</span> <span class="o">:=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">.SD</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">==</span> <span class="s">&quot;Negative Control&quot;</span><span class="p">,</span>
-                          <span class="n">intensity</span><span class="p">]),</span>
-   <span class="n">by</span> <span class="o">=</span> <span class="n">group</span><span class="p">]</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the mean and standard deviation for controls per group</span>
+<span class="n">datAggr</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Negative Control&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Positive Control&quot;</span><span class="p">),</span>
+              <span class="nf">.</span><span class="p">(</span><span class="n">grMn</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">intensity</span><span class="p">),</span>
+                <span class="n">grSD</span> <span class="o">=</span> <span class="nf">sd</span><span class="p">(</span><span class="n">intensity</span><span class="p">)),</span>
+              <span class="n">by</span> <span class="o">=</span> <span class="nf">.</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">drug.type</span><span class="p">)]</span>
+
+<span class="c1"># Convert to wide format such that we have all stats from both controls</span>
+<span class="c1"># in the same row</span>
+<span class="n">datAggrWide</span> <span class="o">=</span> <span class="n">datAggr</span> <span class="o">%&gt;%</span>
+  <span class="nf">dcast</span><span class="p">(</span><span class="n">group</span> <span class="o">~</span> <span class="n">drug.type</span><span class="p">,</span> 
+        <span class="n">value.var</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;grMn&quot;</span><span class="p">,</span> <span class="s">&quot;grSD&quot;</span><span class="p">))</span>
+
+<span class="c1"># Fix column names; remove spaces</span>
+<span class="nf">setnames</span><span class="p">(</span><span class="n">datAggrWide</span><span class="p">,</span> 
+         <span class="nf">make.names</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">datAggrWide</span><span class="p">)))</span>
+
+<span class="c1"># Calculate Z&#39;</span>
+<span class="n">datAggrWide</span><span class="p">[,</span>
+            <span class="n">Zprime</span> <span class="o">:=</span> <span class="m">1</span> <span class="o">-</span> 
+              <span class="p">(</span><span class="m">3</span><span class="o">*</span><span class="n">grSD_Positive.Control</span> <span class="o">+</span> <span class="m">3</span><span class="o">*</span><span class="n">grSD_Negative.Control</span><span class="p">)</span> <span class="o">/</span> 
+              <span class="nf">abs</span><span class="p">(</span><span class="n">grMn_Positive.Control</span> <span class="o">-</span> <span class="n">grMn_Negative.Control</span><span class="p">)]</span>
+
+<span class="n">datAggrWide</span> <span class="o">%&gt;%</span>
+  <span class="n">kableExtra</span><span class="o">::</span><span class="nf">kbl</span><span class="p">(</span><span class="n">digits</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">kableExtra</span><span class="o">::</span><span class="nf">kable_paper</span><span class="p">(</span><span class="n">full_width</span> <span class="o">=</span> <span class="bp">F</span><span class="p">,</span> <span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">as.character</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">IRdisplay</span><span class="o">::</span><span class="nf">display_html</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class=" lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> group </th>
+   <th style="text-align:right;"> grMn_Negative.Control </th>
+   <th style="text-align:right;"> grMn_Positive.Control </th>
+   <th style="text-align:right;"> grSD_Negative.Control </th>
+   <th style="text-align:right;"> grSD_Positive.Control </th>
+   <th style="text-align:right;"> Zprime </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> GR1 </td>
+   <td style="text-align:right;"> 28.34 </td>
+   <td style="text-align:right;"> 82.38 </td>
+   <td style="text-align:right;"> 21.05 </td>
+   <td style="text-align:right;"> 49.36 </td>
+   <td style="text-align:right;"> -2.91 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GR2 </td>
+   <td style="text-align:right;"> 30.44 </td>
+   <td style="text-align:right;"> 66.25 </td>
+   <td style="text-align:right;"> 23.27 </td>
+   <td style="text-align:right;"> 41.74 </td>
+   <td style="text-align:right;"> -4.45 </td>
+  </tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Thresholds for Z’-factor:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(&gt;0.5\)</span> is considered an excellent assay,</p></li>
+<li><p><span class="math notranslate nohighlight">\(&gt;0\)</span> is potentially screenable,</p></li>
+<li><p><span class="math notranslate nohighlight">\(&lt;=0\)</span> distinguishing between positive and negative controls is difficult or impossible.</p></li>
+</ul>
+<p>Explore quantitative concepts of <a class="reference external" href="https://en.wikipedia.org/wiki/High-content_screening">high-content screening</a>, such as z-score, z-factor, z-prime, normalised percentage inhibition, standardized mean difference, interactively with the <a class="reference external" href="https://macdobry.shinyapps.io/screenQC/">screenQC</a> web-app. Source code available on <a class="reference external" href="https://github.com/dmattek/screenQC">GitHub</a>.</p>
+</div>
+</div>
+<div class="section" id="normalisation">
+<h1>Normalisation<a class="headerlink" href="#normalisation" title="Permalink to this headline">¶</a></h1>
+<p>Normalised Percentage Activation: $<span class="math notranslate nohighlight">\(NPA = \frac{meas - CTRL_-}{CTRL_+ - CTRL_-}\)</span>$</p>
+<p>Where <span class="math notranslate nohighlight">\(CTRL_-\)</span> and <span class="math notranslate nohighlight">\(CTRL_+\)</span> are mean negative and positive controls, respectively, and <span class="math notranslate nohighlight">\(meas\)</span> is the measurement in a single cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#  Add a column with the mean intensity of the negative control </span>
+<span class="c1"># for each group</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="n">mn.negctrl</span> <span class="o">:=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">.SD</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">==</span> <span class="s">&quot;Negative Control&quot;</span><span class="p">,</span>
+                           <span class="n">intensity</span><span class="p">]),</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">group</span><span class="p">]</span>
 
 
-<span class="c1"># Add a column with the mean intensity of the positive control for each group</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="n">mn.posctrl</span> <span class="o">:=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">.SD</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">==</span> <span class="s">&quot;Positive Control&quot;</span><span class="p">,</span> 
-                          <span class="n">intensity</span><span class="p">]),</span>
-   <span class="n">by</span> <span class="o">=</span> <span class="n">group</span><span class="p">]</span>
+<span class="c1"># Add a column with the mean intensity of the positive control </span>
+<span class="c1"># for each group</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="n">mn.posctrl</span> <span class="o">:=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">.SD</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">==</span> <span class="s">&quot;Positive Control&quot;</span><span class="p">,</span> 
+                           <span class="n">intensity</span><span class="p">]),</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">group</span><span class="p">]</span>
 
-<span class="c1"># Calculate NPA</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="n">npa</span> <span class="o">:=</span> <span class="p">(</span><span class="n">intensity</span> <span class="o">-</span> <span class="n">mn.negctrl</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mn.posctrl</span> <span class="o">-</span> <span class="n">mn.negctrl</span><span class="p">)]</span>
+<span class="c1"># Calculate NPA for EACH measurement</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="n">npa</span> <span class="o">:=</span> <span class="p">(</span><span class="n">intensity</span> <span class="o">-</span> <span class="n">mn.negctrl</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mn.posctrl</span> <span class="o">-</span> <span class="n">mn.negctrl</span><span class="p">)]</span>
 
 <span class="c1"># Clean; remove temporary columns</span>
-<span class="n">dt</span><span class="p">[,</span>
-   <span class="nf">c</span><span class="p">(</span><span class="s">&quot;mn.negctrl&quot;</span><span class="p">,</span> <span class="s">&quot;mn.posctrl&quot;</span><span class="p">)</span> <span class="o">:=</span> <span class="kc">NULL</span><span class="p">]</span>
+<span class="n">dat</span><span class="p">[,</span>
+    <span class="nf">c</span><span class="p">(</span><span class="s">&quot;mn.negctrl&quot;</span><span class="p">,</span> <span class="s">&quot;mn.posctrl&quot;</span><span class="p">)</span> <span class="o">:=</span> <span class="kc">NULL</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -583,7 +677,7 @@
 <p>Plot of the normalised intensity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dt</span><span class="p">,</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot2</span><span class="o">::</span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dat</span><span class="p">,</span>
                 <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">amount</span><span class="p">),</span>
                     <span class="n">y</span> <span class="o">=</span> <span class="n">npa</span><span class="p">))</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">geom_violin</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">drug.type</span><span class="p">),</span> 
@@ -594,13 +688,14 @@
                         <span class="n">outlier.shape</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> 
                         <span class="n">position</span> <span class="o">=</span> <span class="n">dodge</span><span class="p">,</span> 
                         <span class="n">width</span> <span class="o">=</span> <span class="m">0.1</span><span class="p">)</span> <span class="o">+</span>
-  <span class="c1">#ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(0.1, 10)) +</span>
   <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_fill_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
                                <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggthemes</span><span class="o">::</span><span class="nf">scale_color_tableau</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Drug type&quot;</span><span class="p">,</span>
                                 <span class="n">palette</span> <span class="o">=</span> <span class="s">&quot;Tableau 10&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">percent</span><span class="p">)</span> <span class="o">+</span>
-  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">group</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free_x&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="n">ggplot2</span><span class="o">::</span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">group</span><span class="p">,</span> 
+                      <span class="n">ncol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> 
+                      <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free_x&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Concentration&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;NPA&quot;</span><span class="p">)</span> <span class="o">+</span>
   <span class="n">ggplot2</span><span class="o">::</span><span class="nf">theme_bw</span><span class="p">()</span>
@@ -608,17 +703,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/R_analysis_16_0.png" src="_images/R_analysis_16_0.png" />
+<img alt="_images/R_analysis_18_0.png" src="_images/R_analysis_18_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="fit-a-sigmoid-response">
-<h2>Fit a sigmoid response<a class="headerlink" href="#fit-a-sigmoid-response" title="Permalink to this headline">¶</a></h2>
+<h1>Fit a sigmoid response<a class="headerlink" href="#fit-a-sigmoid-response" title="Permalink to this headline">¶</a></h1>
 <p>Calculate EC50, i.e. concentration that induces a response halfway between the baseline and the maximum.</p>
 <p><a class="reference external" href="https://doi.org/10.1371/journal.pone.0146021">Dose-Response Analysis Using R</a>, PLoS ONE 2015.</p>
 <p>Using the <a class="reference external" href="https://cran.r-project.org/web/packages/drc/">drc package</a>.</p>
-<p><a class="reference external" href="http://www.darrenkoppel.com/2020/09/04/dose-response-modelling-and-model-selection-in-r/">Dose Response Modelling in R</a></p>
-</div>
+<p><a class="reference external" href="http://www.darrenkoppel.com/2020/09/04/dose-response-modelling-and-model-selection-in-r/">Dose Response Modelling in R</a> provides a good summary of the process.</p>
 <div class="section" id="parameter-hill-function">
 <h2>3-parameter Hill function<a class="headerlink" href="#parameter-hill-function" title="Permalink to this headline">¶</a></h2>
 <p>The three-parameter log-logistic dose response function with lower limit 0 is: $<span class="math notranslate nohighlight">\(f(x) = \frac{d}{1+\exp(b(\log(x)-\log(e)))}\)</span>$</p>
@@ -631,34 +725,40 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="m">-2</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters of the log-logistic dose response function</span>
+<span class="n">b</span> <span class="o">=</span> <span class="m">-2</span>
 <span class="n">d</span> <span class="o">=</span> <span class="m">2</span>
 <span class="n">e</span> <span class="o">=</span> <span class="m">2</span>
 
-<span class="n">mySigF</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">d</span> <span class="o">/</span> <span class="p">(</span> <span class="m">1</span> <span class="o">+</span> <span class="nf">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span> <span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nf">log</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">))</span> <span class="p">)</span> <span class="p">}</span>
+<span class="c1"># Define the log-logistic dose response function</span>
+<span class="n">mySigF</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="n">d</span> <span class="o">/</span> <span class="p">(</span> <span class="m">1</span> <span class="o">+</span> <span class="nf">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span> <span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nf">log</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">))</span> <span class="p">)</span> 
+<span class="p">}</span>
 
 <span class="n">xarg</span> <span class="o">=</span> <span class="m">10</span><span class="o">^</span><span class="nf">seq</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">0.1</span><span class="p">)</span>
 
 <span class="p">{</span>
-  <span class="nf">plot</span><span class="p">(</span><span class="n">xarg</span><span class="p">,</span> <span class="nf">mySigF</span><span class="p">(</span><span class="n">xarg</span><span class="p">),</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span><span class="p">)</span>
+  <span class="nf">plot</span><span class="p">(</span><span class="n">xarg</span><span class="p">,</span> <span class="nf">mySigF</span><span class="p">(</span><span class="n">xarg</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span><span class="p">)</span>
   <span class="nf">abline</span><span class="p">(</span><span class="n">v</span> <span class="o">=</span> <span class="n">e</span><span class="p">,</span> <span class="n">lty</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/R_analysis_19_0.png" src="_images/R_analysis_19_0.png" />
+<img alt="_images/R_analysis_20_0.png" src="_images/R_analysis_20_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="fitting">
 <h2>Fitting<a class="headerlink" href="#fitting" title="Permalink to this headline">¶</a></h2>
-<p>The default non-robust least squares estimation (“mean”).</p>
+<p>We use the default non-robust least squares estimation (“mean”) method to fit the dose response to the single-cell data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drfit</span> <span class="o">=</span> <span class="n">drc</span><span class="o">::</span><span class="nf">drm</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">npa</span> <span class="o">~</span> <span class="n">amount</span><span class="p">,</span>
                  <span class="n">curveid</span> <span class="o">=</span> <span class="n">group</span><span class="p">,</span>
-                 <span class="n">data</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Negative Control&quot;</span><span class="p">,</span> <span class="s">&quot;LY294002&quot;</span><span class="p">,</span> <span class="s">&quot;Wortmannin&quot;</span><span class="p">)],</span>
+                 <span class="n">data</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="n">drug.type</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Negative Control&quot;</span><span class="p">,</span> 
+                                             <span class="s">&quot;LY294002&quot;</span><span class="p">,</span> 
+                                             <span class="s">&quot;Wortmannin&quot;</span><span class="p">)],</span>
                  <span class="n">fct</span> <span class="o">=</span> <span class="nf">LL.3</span><span class="p">())</span>
 
 <span class="nf">summary</span><span class="p">(</span><span class="n">drfit</span><span class="p">)</span>
@@ -687,8 +787,9 @@ Residual standard error:
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="fitted-model">
-<h3>Fitted model<a class="headerlink" href="#fitted-model" title="Permalink to this headline">¶</a></h3>
+<h2>Fitted model<a class="headerlink" href="#fitted-model" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> 
@@ -701,14 +802,17 @@ Residual standard error:
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/R_analysis_24_0.png" src="_images/R_analysis_24_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="fitted-ed50">
-<h3>Fitted ED50<a class="headerlink" href="#fitted-ed50" title="Permalink to this headline">¶</a></h3>
+<h2>Fitted ED50<a class="headerlink" href="#fitted-ed50" title="Permalink to this headline">¶</a></h2>
 <p>The estimation of the effective dose (EC50 / ED50 / IC50), i.e. the dose that induces the half-maximum response.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">ED</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="s">&quot;delta&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">ED</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="n">respLev</span> <span class="o">=</span> <span class="m">50</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="s">&quot;delta&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -724,11 +828,11 @@ e:GR2:50   7.7625     0.8995  5.9994  9.5256
 </div>
 </div>
 <div class="section" id="relative-potency">
-<h3>Relative potency<a class="headerlink" href="#relative-potency" title="Permalink to this headline">¶</a></h3>
+<h2>Relative potency<a class="headerlink" href="#relative-potency" title="Permalink to this headline">¶</a></h2>
 <p>Relative potency calculated as the ratio of ED50 estimates for both groups.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">EDcomp</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">50</span><span class="p">,</span> <span class="m">50</span><span class="p">),</span> <span class="n">interval</span> <span class="o">=</span> <span class="s">&quot;delta&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">EDcomp</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="n">percVec</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">50</span><span class="p">,</span> <span class="m">50</span><span class="p">),</span> <span class="n">interval</span> <span class="o">=</span> <span class="s">&quot;delta&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -743,11 +847,11 @@ GR1/GR2:50/50   3.2797 2.1504 4.4089
 </div>
 </div>
 <div class="section" id="slope-comparison">
-<h3>Slope comparison<a class="headerlink" href="#slope-comparison" title="Permalink to this headline">¶</a></h3>
+<h2>Slope comparison<a class="headerlink" href="#slope-comparison" title="Permalink to this headline">¶</a></h2>
 <p>Comparison of slopes by means of a z-test for estimates from both groups.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">compParm</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drc</span><span class="o">::</span><span class="nf">compParm</span><span class="p">(</span><span class="n">drfit</span><span class="p">,</span> <span class="n">strVal</span> <span class="o">=</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="n">operator</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -759,7 +863,6 @@ GR1-GR2 0.129467   0.048457  2.6718 0.007554 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -815,6 +918,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
   
   <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-  None
+  
   </body>
 </html>
