@@ -7,6 +7,8 @@ execute:
 # Information about where the book exists on the web
 repository:
   url: https://github.com/guiwitz/ImagingStats
+
+html:
   use_repository_button: true
 
 sphinx:
