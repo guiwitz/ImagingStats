@@ -18,13 +18,13 @@ The [advanced_processing.ipynb](advanced_processing.ipynb) presents an alternati
 
 Both notebooks can be run on Binder and Google Colab. In particular the second one benefits from using the free GPU from Colab to run cellpose (cellpose might not work properly on Binder because of the limited RAM).
 
-Finally the [image_processing.ipynb](rise_presentation/image_processing_rise.ipynb) notebook can also be run as a slide presentation via the [RISE](https://rise.readthedocs.io/en/stable/) package in Jupyter (e.g on binder).
+Finally the [image_processing.ipynb](rise_presentation/image_processing_rise.ipynb) notebook can also be run as a slide presentation via the [RISE](https://rise.readthedocs.io/en/stable/) package in Jupyter (e.g on binder) or directly in the browser at [this link](https://guiwitz.github.io/ImagingStats/image_processing_rise.slides.html#/).
 
 ## Statistical analysis
 
 ### Presentation
 
-The presentation on basics statistics can be found as [HTML file](statsBasics.html) or [R markdown file](statsBasics.Rmd) in this repository.
+The presentation on basics statistics can be found as [HTML file](statsBasics.html) or [R markdown file](statsBasics.Rmd) in this repository. You can also directly access the presentation using [this link](https://guiwitz.github.io/ImagingStats/statsBasics.html#1).
 
 ### Notebooks
 
