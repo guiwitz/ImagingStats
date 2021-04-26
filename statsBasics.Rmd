@@ -1,6 +1,6 @@
 ---
-title: "Crash-course in\nhypothesis testing"
-author: "Maciej Dobrzynski"
+title: "Crash-course in hypothesis testing"
+author: 'Maciej Dobrzyński, IZB UniBe'
 date: "27 March 2021"
 
 output:
@@ -17,7 +17,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Intro {.normal}
+## About {.normal}
 
 This lecture accompanies the [Imaging Statistics](https://ilias.unibe.ch/goto_ilias3_unibe_crs_2077609.html) course given at the University of Bern as part of the [Microscopy Imaging Center](https://www.mic.unibe.ch) trainings.
 
@@ -37,9 +37,11 @@ Other resources:
 > - What is a p-value?
 > - How to interpret confidence intervals?
 
-## Population vs Sample {.bigger}
+# Population vs Sample
 
-How well does a sample statistic estimate an underlying population parameter?
+---
+
+How well a sample statistic estimates an underlying population parameter?
 
 <div class="centered">
 ![](statsBasics-figure/conf_int_sample_pops.png){width=80%}
@@ -64,7 +66,7 @@ nPopSD = 1.
 ```
 </div>
 
-## What is a sample?
+## Sample
 
 <div class='left' style='float:left;width:45%'>
 > - We're interested in estimating the mean FI in the cell **population**. 
@@ -179,7 +181,7 @@ fPlotSamples = function(inSampleSz, inSampleN, ...) {
 ```
 </div>
 
-## Sampling distribution IV
+## Sampling distribution II
 
 <div class='left' style='float:left;width:48%'>
 > - A **sampling distribution** is the distribution of a statistic, such as the **mean**, that is obtained by repeatedly drawing a large number of samples from a specific population. 
@@ -196,7 +198,7 @@ fPlotSamples = function(inSampleSz, inSampleN, ...) {
 ```
 </div>
 
-## Sampling distribution V
+## Sampling distribution III
 
 <div class='left' style='float:left;width:48%'>
 > - Fortunately, we can create a plot of the distribution of sample means without collecting many different random samples! 
@@ -270,7 +272,9 @@ y2 = dt(xT2, df = nSz2 - 1)
 ```
 </div>
 
-## Significance
+# Statistical significance
+
+## Significant difference
 
 <div class='left' style='float:left;width:48%'>
 > - Let's move to another well. This time we measured the FI of 5 cells, which yielded the mean 6.5.
@@ -408,10 +412,12 @@ fPlotShadedTdist = function(nSz, nMn, nSD, vertLines, vertLinesCol, nFrac, xlim,
 ```
 </div>
 
-## Hypothesis testing
+# Hypothesis testing
+
+## Formulate hypotheses
 
 <div class='left' style='float:left;width:48%'>
-This new measurement is a head-scratcher because it *seems* quite different from 5.
+This new measurement *seems* quite different from the **population** mean (=5).
 
 > - Is it still the same treatment?
 > - What are the chances of obtaining the **sample** mean (=6.5) given the **population** mean (=5)?
@@ -426,7 +432,7 @@ This new measurement is a head-scratcher because it *seems* quite different from
 > - By setting a threshold for *unusuality* we can reject (or not) the null hypothesis.
 </div>
 
-## Hypothesis testing II
+## Test hypotheses
 
 <div class="centered">
 ```{r, fig.height=3}
@@ -459,7 +465,7 @@ This new measurement is a head-scratcher because it *seems* quite different from
 
 The thresholds for shaded regions determine how far away our sample statistic must be from the null hypothesis value before we can say it is *unusual enough* to **reject** the null hypothesis.
 
-## Hypothesis testing III
+## Significance level
 
 <div class="centered">
 ```{r, fig.height=3}
@@ -543,7 +549,9 @@ fPlotShadedTdist(nSz = nSz1,
 ```
 </div>
 
-## Confidence intervals
+# Confidence intervals
+
+## Estimate population mean
 
 <div class='left' style='float:left;width:48%'>
 > - Let's try to estimate the population mean.
@@ -580,7 +588,7 @@ cat(sprintf("Sample SD = %f",
 </div>
 
 
-## Confidence intervals II
+## Point estimate
 
 <div class='left' style='float:left;width:48%'>
 > - The **sample** mean is the most likely value for the **population** mean given the **information we have**.
@@ -603,7 +611,7 @@ fPlotShadedTdist(nSz = nSz1,
 </div>
 
 
-## Confidence intervals III
+## Margin of error
 
 <div class='left' style='float:left;width:48%'>
 > - To put a number on this, let's shade the inner 95% of the distribution.
@@ -778,7 +786,9 @@ The **confidence level** represents the percentage of intervals that would inclu
 ![](statsBasics-figure/type1-2error.png){width=80%}
 </div>
 
-## Pitfalls
+# Pitfalls
+
+---
 
 <div class='left' style='float:left;width:48%'>
 > - <div class="red2">The P-value is not a "score".</div>
