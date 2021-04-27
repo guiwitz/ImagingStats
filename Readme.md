@@ -29,3 +29,8 @@ The presentation on basics statistics can be found as [HTML file](statsBasics.ht
 ### Notebooks
 
 The statistical analysis of the data extracted in the image processing part are visible in multiple files names ```R_analysis```. The [R_analysis.Rmd](R_analysis.Rmd) can be executed directly in RStudio by using the appropriate binder badge (top of this document). The [R_analysis.ipynb](R_analysis.ipynb) notebook can be run either in Jupyter on Binder or directly in Colab. The possibility to run R on Colab is still experimental and a few bugs or package incompatibilities might remain.
+
+## Useful links
+
+- Using R in Colab is still experimental, so you cannot change the language directly from the notebook. You instead have to *create* the notebook in R language using [this link](https://colab.research.google.com/#create=true&language=r).
+- You can browse through the course content at [this link](https://guiwitz.github.io/ImagingStats).
